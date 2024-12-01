@@ -20,9 +20,8 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  
-}
 
+}
 
 .users_overview_payment_description {
   margin-left: 10px;
@@ -34,24 +33,3 @@
   text-align: right;
 }
 
-
-.separator {
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-
-.separator::before,
-.separator::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid $font-color;
-}
-
-.separator:not(:empty)::before {
-  margin-right: .25em;
-}
-
-.separator:not(:empty)::after {
-  margin-left: 1.25em;
-}

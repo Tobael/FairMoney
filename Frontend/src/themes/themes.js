@@ -29,7 +29,7 @@ export const theme = muiCreateTheme({
                         borderColor: "white", // Hover-Farbe
                     },
                     "&.Mui-focused fieldset": {
-                        borderColor: "black", // Fokus-Farbe
+                        borderColor: "white", // Fokus-Farbe
                     },
                 },
             },
@@ -77,7 +77,7 @@ export const theme = muiCreateTheme({
         MuiInputBase: {
             styleOverrides: {
                 root: {
-                    fontSize: "24px"
+                    fontSize: "20px"
                 },
             },
         },
@@ -129,7 +129,6 @@ export const theme = muiCreateTheme({
                     },
                 },
             ],
-
         },
     },
 });

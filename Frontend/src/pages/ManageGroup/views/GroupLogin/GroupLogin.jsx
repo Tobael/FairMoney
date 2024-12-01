@@ -14,7 +14,6 @@ export default function GroupLogin({group, onUserSelected}) {
                 Als wen darf ich dich anmelden?
             </div>
 
-
             <Box id="user_button_list">
                 {group.users.map((user) => (
                     <Button

@@ -4,11 +4,13 @@ import Button from "@mui/material/Button";
 import * as React from "react";
 import {useState} from "react";
 import TextField from "@mui/material/TextField";
-import {InputAdornment, MenuItem} from "@mui/material";
-import Autocomplete from '@mui/material/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import {InputAdornment, InputLabel} from "@mui/material";
 import {createPayment} from "../../../../shared/backend.js";
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+
 
 export default function GroupAddPayment({onBackClick, onPaymentAdded, group, login}) {
     const [payment, setPayment] = useState({
@@ -17,10 +19,11 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         participants: group.users.map((user) => user.user_name),
         amount: 0
     });
+    const [isValidDescription, setIsValidDescription] = useState(false);
+    const [isValidAmount, setIsValidAmount] = useState(false);
+    const [isValidParticipantsList, setIsValidParticipantsList] = useState(false);
 
-    const icon = <CheckBoxOutlineBlankIcon fontSize="small"/>;
-    const checkedIcon = <CheckBoxIcon fontSize="small"/>;
-
+    const [amountChanged, setAmountChanged] = useState(false);
 
     const addPayment = async (payment) => {
         const result = await createPayment(group.uuid, payment, login)
@@ -31,13 +34,23 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         }
     }
 
-
     const handleDescriptionInputChange = (description) => {
         setPayment((prevPayment) => ({
             ...prevPayment,
             description: description.target.value,
         }));
+        setIsValidDescription(description.target.value.length >= 3 && description.target.value.length <= 30)
     };
+
+    const handleAmountInputChange = (amount) => {
+        setPayment((prevPayment) => ({
+            ...prevPayment,
+            amount: amount.target.value,
+        }));
+        setIsValidAmount(!Number.isNaN(amount.target.value) && amount.target.value > 0)
+        setAmountChanged(true)
+    };
+
     const handlePaidByInputChange = (paid_by) => {
         setPayment((prevPayment) => ({
             ...prevPayment,
@@ -45,28 +58,31 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         }));
     };
 
-    const handleParticipantsSelectionChange = (event, participants) => {
-
-
-        const x = participants.map((participant) => participant.user_name)
-        console.log(x)
-
+    const handleParticipantsSelectionChange = (participants) => {
+        const selectedParticipants = participants.target.value;
         setPayment((prevPayment) => ({
             ...prevPayment,
-            participants: x,
+            participants: selectedParticipants,
         }));
 
-        console.log(payment)
-
-
-    };
-    const handleAmountInputChange = (amount) => {
-        setPayment((prevPayment) => ({
-            ...prevPayment,
-            amount: amount.target.value,
-        }));
+        setIsValidParticipantsList(selectedParticipants.length > 0);
     };
 
+    const createMultiSelectText = (selectedParticipants) => {
+        console.log(selectedParticipants);
+        console.log(selectedParticipants[0]);
+        console.log(selectedParticipants.length);
+        console.log(group.users.length);
+
+        if (selectedParticipants.length === 0) {
+            return "Niemand";
+        } else if (selectedParticipants.length === group.users.length) {
+            return "Alle";
+        } else if (selectedParticipants.length === 1) {
+            return selectedParticipants[0];
+        }
+        return selectedParticipants[0] + " +" + (selectedParticipants.length - 1);
+    }
 
     return (
         <div id="group_add_payment_container" className="default_page_container">
@@ -82,6 +98,8 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
                     label="Was wurde gezahlt?"
                     onChange={handleDescriptionInputChange}
                     variant="standard"
+                    error={!isValidDescription && payment.description !== ""}
+                    helperText={(!isValidDescription && payment.description !== "") ? "Bitte zwischen 3 und 30 Zeichen eingeben!" : ""}
                     InputLabelProps={{shrink: true}}
                 />
 
@@ -95,6 +113,8 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
                     label="Wieviel hat es gekostet?"
                     onChange={handleAmountInputChange}
                     variant="standard"
+                    error={!isValidAmount && amountChanged}
+                    helperText={(!isValidAmount && amountChanged) ? "Bitte gebe einen gültigen positiven Betrag ein!" : ""}
                     InputLabelProps={{shrink: true}}
                     slotProps={{
                         input: {
@@ -117,27 +137,30 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
                     ))}
                 </TextField>
 
-                <Autocomplete
-                    multiple
-                    id="participants_selection"
-                    limitTags={1}
-                    options={group.users}
-                    getOptionLabel={(option) => option.user_name}
-                    defaultValue={group.users}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            variant="standard"
-                            label="Wer war beteiligt?"
-                            placeholder=""
-                        />
-                    )}
-                />
-
+                <div id="multi_select_container">
+                    <InputLabel variant="standard" htmlFor="multi_select_participants">Wer war beteiligt?</InputLabel>
+                    <Select
+                        id="multi_select_participants"
+                        fullWidth={true}
+                        multiple
+                        label="Wer war beteiligt?"
+                        value={payment.participants.map((user_name) => user_name)}
+                        onChange={handleParticipantsSelectionChange}
+                        renderValue={(selected) => createMultiSelectText(selected)}
+                        variant="standard">
+                        {group.users.map((user) => (
+                            <MenuItem key={user.user_name} value={user.user_name}>
+                                <Checkbox checked={payment.participants.includes(user.user_name)}/>
+                                <ListItemText primary={user.user_name}/>
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </div>
 
                 <Button
                     id="btn_add_payment"
                     variant="default"
+                    disabled={!isValidDescription || !isValidAmount || !isValidParticipantsList || !amountChanged}
                     onClick={async () => {
                         await addPayment(payment)
                         onPaymentAdded(payment)
