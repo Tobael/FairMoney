@@ -1,0 +1,21 @@
+@import '../../../../index';
+
+
+#user_button_list {
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.user_button {
+  width: 100% !important;
+  height: 50px;
+  border: none;
+}

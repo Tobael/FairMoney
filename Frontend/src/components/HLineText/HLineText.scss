@@ -1,0 +1,27 @@
+@import '../../index';
+
+.hline_text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.hline_text::before,
+.hline_text::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid $font-color;
+}
+
+.hline_text:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.hline_text:not(:empty)::after {
+  margin-left: .5em;
+}
+
+.hline_small_text {
+  font-size: .6em;
+}

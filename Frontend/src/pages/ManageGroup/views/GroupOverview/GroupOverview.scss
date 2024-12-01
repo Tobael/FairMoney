@@ -1,0 +1,36 @@
+@import "../../../../index";
+
+#overview_button_container {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  justify-content: center;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#overview_button_container_left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+}
+
+#overview_button_container_right {
+  align-content: center;
+}
+
+#btn_goto_accounting,
+#btn_goto_history {
+  width: 100%;
+}
+
+#group_overview_user_container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 25px;
+  height: max(100%, 150px);
+  width: 70%;
+}
