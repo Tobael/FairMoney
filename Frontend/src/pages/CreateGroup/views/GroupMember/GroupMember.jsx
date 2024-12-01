@@ -47,52 +47,55 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
             <div className="headline_text headline_less_space">
                 Mit wem möchtest du Geld fair teilen?
             </div>
-            <div id="box_group_member">
-                <div id="box_group_member_list">
-                    <UserList
-                        creator={creator}
-                        users={groupMembers}/>
-                </div>
-                <Button
-                    id="btn_create_group"
-                    variant="default"
-                    disabled={!createActive}
-                    onClick={() => onMembersAdded(groupMembers)}
-                >
-                    Gruppe erstellen
-                </Button>
-                <div className="sub_headline_text">
-                    Weitere Person hinzufügen?
-                </div>
-                <TextField
-                    fullWidth
-                    value={groupMember.name}
-                    label="Wie ist der Name der Person?"
-                    onChange={handleNameInputChange}
-                    error={!isValidName && groupMember.name !== ""}
-                    helperText={isValidName || groupMember.name === "" ? (isUniqueName ? "" : "Der Name ist bereits vergeben!") : "Bitte maximal 30 Zeichen ein!"}
-                    variant="standard"
-                    InputLabelProps={{shrink: true}}
-                />
-                <TextField
-                    fullWidth={true}
-                    value={groupMember.paypal}
-                    label="Hat sie einen PayPal.me Link (optional)?"
-                    onChange={handlePayPalInputChange}
-                    error={!isValidPaypal && groupMember.paypal !== ""}
-                    helperText={isValidPaypal || groupMember.paypal === "" ? "" : "Bitte gib einen gültigen PayPal.me Link ein!"}
-                    variant="standard"
-                    InputLabelProps={{shrink: true}}
-                />
-                <Button
-                    variant="default"
-                    onClick={() => onMemberAdded()}
-                    disabled={!isValidName || !isValidPaypal || !isUniqueName}
-                >
-                    + Person hinzufügen
-                </Button>
+            <div id="box_group_member_list">
+                <UserList
+                    creator={creator}
+                    users={groupMembers}/>
             </div>
+            <Button
+                id="btn_create_group"
+                variant="default"
+                disabled={!createActive}
+                onClick={() => onMembersAdded(groupMembers)}
+            >
+                Gruppe erstellen
+            </Button>
+            <div className="sub_headline_text">
+                Weitere Person hinzufügen?
+            </div>
+            <TextField
+                fullWidth
+                id="group_member_name"
+                value={groupMember.name}
+                label="Wie ist der Name der Person?"
+                onChange={handleNameInputChange}
+                error={!isValidName && groupMember.name !== ""}
+                helperText={isValidName || groupMember.name === "" ? (isUniqueName ? "" : "Der Name ist bereits vergeben!") : "Bitte maximal 30 Zeichen ein!"}
+                variant="standard"
+                InputLabelProps={{shrink: true}}
+            />
+            <div id="margin_between_fields"/>
+            <TextField
+                fullWidth
+                id="group_member_paypal"
+                value={groupMember.paypal}
+                label="Hat sie einen PayPal.me Link (optional)?"
+                onChange={handlePayPalInputChange}
+                error={!isValidPaypal && groupMember.paypal !== ""}
+                helperText={isValidPaypal || groupMember.paypal === "" ? "" : "Bitte gib einen gültigen PayPal.me Link ein!"}
+                variant="standard"
+                InputLabelProps={{shrink: true}}
+            />
+            <Button
+                id="btn_add_member"
+                variant="default"
+                onClick={() => onMemberAdded()}
+                disabled={!isValidName || !isValidPaypal || !isUniqueName}
+            >
+                + Person hinzufügen
+            </Button>
         </div>
+
     );
 };
 export default GroupMember;
