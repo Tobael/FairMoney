@@ -1,0 +1,34 @@
+@import '../../../../index';
+
+#url_text {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 70%;
+  margin: 30px;
+}
+
+#btn_copy_join_msg {
+  margin-bottom: 30px;
+}
+
+#btn_join_group {
+  margin-top: 30px;
+}
+
+#box_group_member_summary {
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  overflow-y: auto;
+}
+
+#btn_join_group {
+  margin-bottom: 20px;
+}
+
+#copy_icon {
+  margin-right: 10px;
+  color: $font-color;
+  border-radius: 50%;
+}
