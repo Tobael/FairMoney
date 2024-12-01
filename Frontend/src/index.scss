@@ -23,10 +23,15 @@ $font-color: #FFFFFF;
   text-align: center;
   font-weight: bold;
   font-size: large;
+  width: 70%;
+}
+
+.headline_less_space {
+  margin-top: 80px;
 }
 
 .headline_no_space {
-  margin-top: 80px;
+  margin-top: 0;
 }
 
 .sub_headline_text {
