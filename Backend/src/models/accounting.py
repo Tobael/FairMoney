@@ -14,3 +14,6 @@ class Accounting:
         self.transactions = transactions
         self.created_at = created_at
         self.created_by = created_by
+
+    def __str__(self) -> str:
+        return " | ".join([str(transaction) for transaction in self.transactions])

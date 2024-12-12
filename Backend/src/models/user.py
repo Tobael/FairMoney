@@ -6,3 +6,6 @@ class User:
         self.uuid = uuid
         self.name = name
         self.paypal_me_link = paypal_me_link
+
+    def __str__(self) -> str:
+        return self.name

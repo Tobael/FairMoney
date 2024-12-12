@@ -11,3 +11,6 @@ class Transaction:
         self.payment_from = payment_from
         self.payment_to = payment_to
         self.amount = amount
+
+    def __str__(self) -> str:
+        return f"{self.payment_from} -> {self.payment_to} ({self.amount} €) "

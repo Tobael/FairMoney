@@ -22,3 +22,7 @@ class Payment:
         self.balanced_by = balanced_by
         self.created_at = created_at
         self.created_by = created_by
+
+    def __str__(self) -> str:
+        return (f"{self.description} {'(Balanced)' if self.balanced_by is not None else ''} {self.paid_by} -> "
+                f"({", ".join([str(participant) for participant in self.participants])}) ({self.amount} €) ")

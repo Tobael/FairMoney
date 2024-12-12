@@ -29,3 +29,7 @@ class Group:
 
         self.closed_at = closed_at
         self.closed_by = closed_by
+
+    def __str__(self) -> str:
+        return (f"{self.title} {'(Closed)' if self.closed else ''} (User: {len(self.users)}, "
+                f"Payments: {len(self.payments)}, Accountings: {len(self.accountings)})")
