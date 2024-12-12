@@ -111,7 +111,7 @@ export const createAccounting = async (uuid, user_name) => {
 
 const fetchApi = async (url, requestOptions) => {
     try {
-        return await fetch(`${baseUrl}/${url}`, requestOptions);
+        return await fetch(`${process.env.BACKEND_URL}/${url}`, requestOptions);
     } catch (error) {
         showErrorPage(error)
         throw error;
