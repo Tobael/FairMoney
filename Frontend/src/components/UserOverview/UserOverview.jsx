@@ -1,14 +1,7 @@
-import * as React from "react";
-import {useEffect} from "react";
 import "./UserOverview.scss";
 import HLineText from "../HLineText/HLineText.jsx";
 
 export default function UserOverview({user}) {
-
-    useEffect(() => {
-        console.log(user);
-    }, []);
-
     return (
         <div id="user_overview_container">
             <HLineText text={`${user.user_name} (${user.sum_amount} €)`}/>

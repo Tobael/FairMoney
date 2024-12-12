@@ -1,0 +1,15 @@
+
+#accounting_item_container {
+  justify-self: center;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr 1fr;
+  gap: 10px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+#accounting_item_amount {
+  white-space: nowrap;
+}

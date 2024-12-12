@@ -1,6 +1,6 @@
 import "./GroupOverview.scss";
 import Button from "@mui/material/Button";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import UserOverview from "../../../../components/UserOverview/UserOverview.jsx";
 import AddIcon from "@mui/icons-material/Add";
 import {Fab} from "@mui/material";
@@ -8,7 +8,6 @@ import {Fab} from "@mui/material";
 export default function GroupOverview({onAddPayment, onAddAccounting, onShowHistory, onBackClick, group, login}) {
 
     const getOverallPayments = () => {
-        console.log(group.users)
         return group.users.reduce((acc, user) => acc + user.payments.length, 0);
     }
 
@@ -46,10 +45,7 @@ export default function GroupOverview({onAddPayment, onAddAccounting, onShowHist
                         disabled={group.closed}
                         id="btn_goto_payment"
                         variant="default"
-                        onClick={() => {
-                            onAddPayment()
-                            console.log(group)
-                        }}
+                        onClick={() => onAddPayment()}
                     >
                         <AddIcon/>
                     </Fab>

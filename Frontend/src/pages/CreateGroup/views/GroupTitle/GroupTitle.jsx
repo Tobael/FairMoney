@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import "./GroupTitle.scss";
 import TextField from "@mui/material/TextField";
 import {useEffect, useState} from "react";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 
 const GroupTitle = ({onNameSet, onBackClick}) => {
     const [groupTitle, setGroupTitle] = useState("");

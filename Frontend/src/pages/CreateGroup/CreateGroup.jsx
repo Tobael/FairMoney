@@ -7,6 +7,7 @@ import GroupSummary from "./views/GroupSummary/GroupSummary.jsx";
 import LandingPage from "./views/LandingPage/LandingPage.jsx";
 import {CreateGroupViews} from "../../shared/enums.js";
 import {createGroup as createGroupBackend} from "../../shared/backend.js";
+import {showErrorPage} from "../../shared/error.js";
 
 const CreateGroupView = () => {
     const [show, setCurrentView] = React.useState(CreateGroupViews.LandingPage);
@@ -17,11 +18,6 @@ const CreateGroupView = () => {
     });
     const [groupId, setGroupId] = React.useState("");
 
-    const createGroup = async () => {
-        const result = await createGroupBackend(group)
-        const data = await result.json();
-        setGroupId(data.uuid);
-    }
 
     const resetGroupCreation = () => {
         setGroup({
@@ -34,6 +30,16 @@ const CreateGroupView = () => {
     }
 
     useEffect(() => {
+        const createGroup = async () => {
+            const result = await createGroupBackend(group)
+            if (result.ok) {
+                const data = await result.json();
+                setGroupId(data.uuid);
+            } else {
+                showErrorPage(result)
+            }
+        }
+
         if (group.creator.name && group.title && group.members.length > 0) {
             createGroup().then(() => {
                 setCurrentView(CreateGroupViews.GroupSummary);

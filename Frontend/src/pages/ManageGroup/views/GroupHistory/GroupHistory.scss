@@ -1,0 +1,8 @@
+#history_container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 80%;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}

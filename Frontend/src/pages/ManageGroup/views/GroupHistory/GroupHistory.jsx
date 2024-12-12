@@ -1,45 +1,43 @@
 import "./GroupHistory.scss";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import * as React from "react";
 import {useEffect} from "react";
 import {fetchGroupHistory} from "../../../../shared/backend.js";
 import HistoryItem from "../../../../components/HistoryItem/HistoryItem.jsx";
+import {showErrorPage} from "../../../../shared/error.js";
 
 
-export default function GroupHistory({onBackClick, groupId, login}) {
+export default function GroupHistory({onBackClick, group, login}) {
     const [history, setHistory] = React.useState(null)
+    const [showHistory, setShowHistory] = React.useState(false)
 
-    const getHistory = async () => {
-        const result = await fetchGroupHistory(groupId)
-        if (result.ok) {
-            const data = await result.json()
-            setHistory(data);
-        } else {
-            console.error("Error: ", result)
+
+    useEffect(() => {
+        const getHistory = async () => {
+            const result = await fetchGroupHistory(group.uuid)
+            if (result.ok) {
+                const data = await result.json()
+                setHistory(data);
+            } else {
+                showErrorPage(result)
+            }
         }
-    }
 
-    useEffect(() => {
-        getHistory().then((data) => {
-            console.log(data)
-        })
-    }, []);
-
-
-    useEffect(() => {
-
-        console.log(history)
-
-    }, [history]);
+        getHistory().then(() => setShowHistory(true))
+    }, [group.uuid]);
 
 
     return (
         <div id="group_history_container" className="default_page_container">
             <Header onBackClick={() => onBackClick()}/>
             <div className="headline_text headline_less_space">Hallo {login}, das ist in der Gruppe passiert.</div>
-            <div className="history_container">
-                {history && history.map((item, idx) => (<HistoryItem key={idx} item={item}/>))}
-            </div>
+            {showHistory && (
+                <div id="history_container">
+                    {history && history.map((item, idx) => (<HistoryItem key={idx}
+                                                                         group={group}
+                                                                         item={item}/>))}
+                </div>
+            )}
         </div>
     );
 }

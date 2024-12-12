@@ -1,10 +1,9 @@
 import "./GroupSummary.scss";
 import Button from "@mui/material/Button";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import {useNavigate} from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import * as React from "react";
 import UserList from "../../../../components/UserList/UserList.jsx";
 import {getGroupJoinMessage, getUrl} from "../../../../shared/messages.js";
 

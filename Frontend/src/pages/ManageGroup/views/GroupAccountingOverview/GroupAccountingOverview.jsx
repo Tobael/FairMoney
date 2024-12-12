@@ -1,5 +1,5 @@
 import "./GroupAccountingOverview.scss";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import {useEffect} from "react";
@@ -8,37 +8,39 @@ import {
     createAccounting as createAccountingBackend,
 } from "../../../../shared/backend.js";
 import {getGroupAccountingMessage} from "../../../../shared/messages.js";
-import {getAmountAsString} from "../../../../shared/formatter.js";
+import AccountingItem from "../../../../components/AccoutingItem/AccountingItem.jsx";
+import {showErrorPage} from "../../../../shared/error.js";
 
 
-export default function GroupAccountingOverview({onBackClick, login, groupId, groupTitle}) {
-    const [accounting, setAccounting] = React.useState(null)
+export default function GroupAccountingOverview({onBackClick, login, group}) {
+    const [accountings, setAccountings] = React.useState(null)
     const [showAccounting, setShowAccounting] = React.useState(false)
 
     const writeMessageToClipboard = () => {
-        navigator.clipboard.writeText(getGroupAccountingMessage(accounting, groupTitle, groupId))
+        navigator.clipboard.writeText(getGroupAccountingMessage(accountings, group))
     }
 
-    const createAccounting = async () => {
-        const result = await createAccountingBackend(groupId, login)
-        if (result.ok) {
-            const data = await result.json()
-            setAccounting(data);
-        } else {
-            console.error("Error: ", result)
-        }
-    }
 
     const closeGroup = async () => {
-        const result = await closeGroupBackend(groupId, login)
+        const result = await closeGroupBackend(group.uuid, login)
         if (!result.ok) {
-            console.error("Error: ", result)
+            showErrorPage(result)
         }
     }
 
     useEffect(() => {
+        const createAccounting = async () => {
+            const result = await createAccountingBackend(group.uuid, login)
+            if (result.ok) {
+                const data = await result.json()
+                setAccountings(data);
+            } else {
+                showErrorPage(result)
+            }
+        }
+
         createAccounting().then(() => setShowAccounting(true))
-    }, []);
+    }, [group.uuid, login]);
 
 
     return (
@@ -46,15 +48,15 @@ export default function GroupAccountingOverview({onBackClick, login, groupId, gr
             <Header onBackClick={() => onBackClick()}/>
             <div className="headline_text headline_less_space">Die Gruppe wurde abgerechnet.</div>
             {showAccounting && (
-                <div id="group_acconting_overview_inner_container">
+                <>
                     <div className="headline_text headline_no_space">Die folgenden Transaktionen sind notwendig, um die
                         Ausgaben fair aufzuteilen:
                     </div>
-                    {accounting.map((transaction) => (
-                        <div key={transaction.id}>
-                            {transaction.payment_from} => {transaction.payment_to} {getAmountAsString(transaction.amount)}
-                        </div>
-                    ))}
+                    <div id="accounting_entries_container">
+                        {accountings.map((transaction) => (
+                            <AccountingItem key={transaction.id} transaction={transaction}/>
+                        ))}
+                    </div>
                     <Button
                         id="btn_copy_accounting_msg"
                         variant="default"
@@ -63,7 +65,6 @@ export default function GroupAccountingOverview({onBackClick, login, groupId, gr
                         Abrechnungsnachricht kopieren
                     </Button>
                     <div className="headline_text headline_no_space">Soll die Gruppe weiterhin bestehen?</div>
-
                     <Button
                         id="btn_keep_grp"
                         variant="default"
@@ -81,7 +82,7 @@ export default function GroupAccountingOverview({onBackClick, login, groupId, gr
                     >
                         Nein danke.
                     </Button>
-                </div>
+                </>
             )}
         </div>
     );

@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import "./LandingPage.scss";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import Footer from "../../../../components/Footer/footer.jsx";
+import Footer from "../../../../components/Footer/Footer.jsx";
 
 const LandingPage = ({onNewGroup}) => {
     const [groupCode, setGroupCode] = useState("");

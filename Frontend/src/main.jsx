@@ -10,7 +10,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import {ThemeProvider} from "@mui/material/styles";
 import {theme} from "./themes/themes.js";
-import ErrorPage from "./pages/Error/error.jsx";
+import ErrorPage from "./pages/Error/Error.jsx";
 
 const router = createBrowserRouter([
     {

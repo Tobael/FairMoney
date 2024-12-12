@@ -1,6 +1,6 @@
 import "./ManageGroup.scss";
 import {useLoaderData} from "react-router-dom";
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {fetchGroup} from "../../shared/backend.js";
 import GroupLogin from "./views/GroupLogin/GroupLogin.jsx";
 import GroupOverview from "./views/GroupOverview/GroupOverview.jsx";
@@ -9,6 +9,7 @@ import GroupHistory from "./views/GroupHistory/GroupHistory.jsx";
 import GroupCreateAccounting from "./views/GroupCreateAccounting/GroupCreateAccounting.jsx";
 import GroupAccountingOverview from "./views/GroupAccountingOverview/GroupAccountingOverview.jsx";
 import {ManageGroupViews} from "../../shared/enums.js";
+import {showErrorPage} from "../../shared/error.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({params}) {
@@ -22,30 +23,30 @@ export default function ManageGroup() {
 
     const groupId = useLoaderData();
 
-    const getGroup = async () => {
+    const getGroup = useCallback(async () => {
         const result = await fetchGroup(groupId)
         if (result.ok) {
             const data = await result.json()
             setGroup(data);
             return data
         } else {
-            console.error("Error: ", result)
+            showErrorPage(result)
         }
-    }
+    }, [groupId]);
 
     useEffect(() => {
         getGroup().then((group) => {
             setCurrentView(ManageGroupViews.GroupLogin)
             document.title = `FairMoney - ${group.title}`;
         })
-    }, []);
+    }, [getGroup]);
 
 
     useEffect(() => {
         if (login === null && group !== null) {
             setCurrentView(ManageGroupViews.GroupLogin)
         }
-    }, [login]);
+    }, [login, group]);
 
     return (
         <div id="create_group_wrapper">
@@ -95,7 +96,7 @@ export default function ManageGroup() {
                     onBackClick={() => {
                         setCurrentView(ManageGroupViews.GroupOverview)
                     }}
-                    groupId={groupId}
+                    group={group}
                     login={login}
                 />
             )}
@@ -118,8 +119,7 @@ export default function ManageGroup() {
                         await getGroup();
                         setCurrentView(ManageGroupViews.GroupOverview)
                     }}
-                    groupId={groupId}
-                    groupTitle={group.title}
+                    group={group}
                     login={login}
                 />
             )}

@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import TextField from "@mui/material/TextField";
 import {useEffect, useState} from "react";
 import "./GroupCreator.scss";

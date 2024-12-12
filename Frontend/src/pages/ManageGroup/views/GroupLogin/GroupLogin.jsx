@@ -1,6 +1,5 @@
 import "./GroupLogin.scss";
-import Footer from "../../../../components/Footer/footer.jsx";
-import * as React from "react";
+import Footer from "../../../../components/Footer/Footer.jsx";
 import Button from "@mui/material/Button";
 import {Box} from "@mui/material";
 

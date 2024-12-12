@@ -1,7 +1,6 @@
 import "./GroupAddPayment.scss";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import Button from "@mui/material/Button";
-import * as React from "react";
 import {useState} from "react";
 import TextField from "@mui/material/TextField";
 import {InputAdornment, InputLabel} from "@mui/material";
@@ -10,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import {showErrorPage} from "../../../../shared/error.js";
 
 
 export default function GroupAddPayment({onBackClick, onPaymentAdded, group, login}) {
@@ -21,16 +21,14 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
     });
     const [isValidDescription, setIsValidDescription] = useState(false);
     const [isValidAmount, setIsValidAmount] = useState(false);
-    const [isValidParticipantsList, setIsValidParticipantsList] = useState(false);
+    const [isValidParticipantsList, setIsValidParticipantsList] = useState(true);
 
     const [amountChanged, setAmountChanged] = useState(false);
 
     const addPayment = async (payment) => {
         const result = await createPayment(group.uuid, payment, login)
-        if (result.ok) {
-            console.log("Payment added")
-        } else {
-            console.error("Error: ", result)
+        if (!result.ok) {
+            showErrorPage(result)
         }
     }
 
@@ -69,14 +67,7 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
     };
 
     const createMultiSelectText = (selectedParticipants) => {
-        console.log(selectedParticipants);
-        console.log(selectedParticipants[0]);
-        console.log(selectedParticipants.length);
-        console.log(group.users.length);
-
-        if (selectedParticipants.length === 0) {
-            return "Niemand";
-        } else if (selectedParticipants.length === group.users.length) {
+        if (selectedParticipants.length === group.users.length) {
             return "Alle";
         } else if (selectedParticipants.length === 1) {
             return selectedParticipants[0];

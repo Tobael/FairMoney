@@ -1,6 +1,8 @@
 @import "../../../../index";
 
 #overview_button_container {
+  position: sticky;
+  bottom: 10px;
   display: flex;
   flex-direction: row;
   gap: 25px;

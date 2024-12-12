@@ -1,15 +1,15 @@
-import * as React from "react";
 import "./HistoryItem.scss";
 import HLineText from "../HLineText/HLineText.jsx";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from '@mui/icons-material/Info';
-import {Unstable_Popup as BasePopup} from '@mui/base/Unstable_Popup';
-import {styled} from '@mui/system';
 import {getAmountAsString} from "../../shared/formatter.js";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import AccountingItem from "../AccoutingItem/AccountingItem.jsx";
+import Button from "@mui/material/Button";
+import {getGroupAccountingMessage} from "../../shared/messages.js";
 
-export default function HistoryItem({item}) {
-    const [anchor, setAnchor] = React.useState(null);
-
+export default function HistoryItem({group, item}) {
     const getHeadline = () => {
         const date = new Date(item.datetime);
         const formattedDate = date.toLocaleString('de-DE', {
@@ -23,57 +23,16 @@ export default function HistoryItem({item}) {
         return `${formattedDate} von ${item.creator} eingetragen`
     }
 
-
-    const popupOpen = Boolean(anchor);
-
-    const showPopups = (event) => {
-        setAnchor(anchor ? null : event.currentTarget);
+    const writeMessageToClipboard = () => {
+        navigator.clipboard.writeText(getGroupAccountingMessage(item.details, group))
     }
-    const grey = {
-        50: '#F3F6F9',
-        100: '#E5EAF2',
-        200: '#DAE2ED',
-        300: '#C7D0DD',
-        400: '#B0B8C4',
-        500: '#9DA8B7',
-        600: '#6B7A90',
-        700: '#434D5B',
-        800: '#303740',
-        900: '#1C2025',
-    };
-
-    const blue = {
-        200: '#99CCFF',
-        300: '#66B2FF',
-        400: '#3399FF',
-        500: '#007FFF',
-        600: '#0072E5',
-        700: '#0066CC',
-    };
-    const PopupBody = styled('div')(
-        ({theme}) => `
-  width: max-content;
-  padding: 12px 16px;
-  margin: 8px;
-  border-radius: 8px;
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  box-shadow: ${
-            theme.palette.mode === 'dark'
-                ? `0px 4px 8px rgb(0 0 0 / 0.7)`
-                : `0px 4px 8px rgb(0 0 0 / 0.1)`
-        };
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 500;
-  font-size: 0.875rem;
-  z-index: 1;
-`,
-    );
-    const id = open ? 'simple-popup' : undefined;
 
 
     return (
         <div className="history_item">
-            <HLineText text={getHeadline()} size="small"/>
+            <div className="history_item_headline">
+                <HLineText text={getHeadline()} size="small"/>
+            </div>
             {item.type.toString() === "CREATED" && (
                 <div className="history_item_text">
                     Gruppe wurde erstellt.
@@ -95,17 +54,55 @@ export default function HistoryItem({item}) {
                 </div>
             )}
             {(item.type.toString() === "PAYMENT" || item.type.toString() === "ACCOUTING") && (
-                <div className="history_item_informations">
-                    <IconButton id="info_button" onClick={showPopups}>
-                        <InfoIcon/>
-                    </IconButton>
-                    <BasePopup id={id} open={popupOpen} anchor={anchor}>
-                        <PopupBody>
-                        </PopupBody>
-                    </BasePopup>
-                </div>
+                <Popup trigger={
+                    <IconButton id="info_button">
+                        <InfoIcon style={{color: 'white'}}/>
+                    </IconButton>}
+                       modal
+                       position="left center">
+                    {close => (
+                        <div className="popup_modal">
+                            <button className="close" onClick={close}>
+                                &times;
+                            </button>
+                            <div className="popup-content-container">
+                                {item.type.toString() === "PAYMENT" && (
+                                    <>
+                                        <div id="popup_title">Ausgabe</div>
+                                        <div
+                                            id="popup_payment_description">Beschreibung: {item.details.description}</div>
+                                        <div
+                                            id="popup_payment_amount">Kosten: {getAmountAsString(item.details.amount)}</div>
+                                        <div id="popup_payment_paid_by">Bezahlt von: {item.details.paid_by}</div>
+                                        <div
+                                            id="popup_payment_participants">Beteiligt: {item.details.participants.join(", ")}</div>
+                                    </>
+                                )}
+                                {item.type.toString() === "ACCOUTING" && (
+                                    <>
+                                        <div id="popup_title">Abrechnung</div>
+                                        <div id="popup_accounting_transactions_container">
+                                            {item.details.map((transaction) => (
+                                                <AccountingItem key={transaction.id} transaction={transaction}/>
+                                            ))}
+                                        </div>
+                                        <div id="popup_accounting_copy_msg">
+                                            <Button
+
+                                                variant="default"
+                                                className="user_button"
+                                                onClick={() => writeMessageToClipboard()}>
+                                                Abrechnungsnachricht kopieren
+                                            </Button>
+
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </Popup>
             )}
         </div>
-
     );
 };

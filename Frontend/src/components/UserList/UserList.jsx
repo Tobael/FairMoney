@@ -1,4 +1,3 @@
-import * as React from "react";
 import {Box} from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import "./UserList.scss"

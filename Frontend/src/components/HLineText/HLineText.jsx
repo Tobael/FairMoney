@@ -1,4 +1,3 @@
-import * as React from "react";
 import "./HLineText.scss";
 
 export default function HLineText({text, size = "default"}) {

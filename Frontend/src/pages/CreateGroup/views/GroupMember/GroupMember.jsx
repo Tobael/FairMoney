@@ -1,9 +1,8 @@
 import Button from "@mui/material/Button";
-import * as React from "react";
 import {useEffect, useState} from "react";
 import TextField from "@mui/material/TextField";
 import "./GroupMember.scss";
-import Header from "../../../../components/Header/header.jsx";
+import Header from "../../../../components/Header/Header.jsx";
 import UserList from "../../../../components/UserList/UserList.jsx";
 import {isValidPaypalMeUrl} from "../../../../shared/validator.js";
 
@@ -39,7 +38,7 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
         setIsValidName(groupMember.name.length >= 1 && groupMember.name.length <= 30);
         setIsUniqueName(!(groupMembers.some((member) => member.name === groupMember.name) || creator.name === groupMember.name));
         setIsValidPaypal(groupMember.paypal === "" || isValidPaypalMeUrl(groupMember.paypal));
-    }, [groupMember]);
+    }, [groupMembers, groupMember, creator.name]);
 
     return (
         <div id="group_member_container" className="default_page_container">

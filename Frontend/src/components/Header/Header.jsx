@@ -1,4 +1,4 @@
-import "./header.scss";
+import "./Header.scss";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function Header({onBackClick}) {
