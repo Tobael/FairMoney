@@ -10,26 +10,35 @@ from sqlalchemy.ext.asyncio import (
 )
 
 # noinspection PyUnresolvedReferences
-from src.models.orm.accounting import Accounting
+from src.models.orm.accounting import Accounting  # noqa: 401
 # noinspection PyUnresolvedReferences
-from src.models.orm.group import Group
+from src.models.orm.group import Group  # noqa: 401
 from src.models.orm.orm_base import ORMBase
 # noinspection PyUnresolvedReferences
-from src.models.orm.payment import Payment
+from src.models.orm.payment import Payment  # noqa: 401
 # noinspection PyUnresolvedReferences
-from src.models.orm.payment_participants import payment_participants_table
+from src.models.orm.payment_participants import payment_participants_table  # noqa: 401
 # noinspection PyUnresolvedReferences
-from src.models.orm.transaction import Transaction
+from src.models.orm.transaction import Transaction  # noqa: 401
 # noinspection PyUnresolvedReferences
-from src.models.orm.user import User
+from src.models.orm.user import User  # noqa: 401
 
 
 class DatabaseSessionManager:
+    """
+    Manages the database session and connection.
+
+    Attributes:
+        _engine (AsyncEngine): The SQLAlchemy async engine.
+        _sessionmaker (async_sessionmaker): The SQLAlchemy async session maker.
+    """
+
     def __init__(self, host: str, engine_kwargs: dict[str, any] = {}):
         self._engine = create_async_engine(host, **engine_kwargs)
         self._sessionmaker = async_sessionmaker(autocommit=False, bind=self._engine)
 
     async def close(self):
+        """Closes the database engine and session maker."""
         if self._engine is not None:
             await self._engine.dispose()
 
@@ -38,6 +47,15 @@ class DatabaseSessionManager:
 
     @contextlib.asynccontextmanager
     async def connect(self) -> AsyncIterator[AsyncConnection]:
+        """
+        Provides a context manager for an asynchronous database connection.
+
+        Yields:
+            AsyncIterator[AsyncConnection]: The asynchronous database connection.
+
+        Raises:
+            HTTPException: If the database engine is not initialized.
+        """
         if self._engine is None:
             raise HTTPException(status_code=500, detail="Database could not be initialized.")
 
@@ -50,6 +68,15 @@ class DatabaseSessionManager:
 
     @contextlib.asynccontextmanager
     async def session(self) -> AsyncIterator[AsyncSession]:
+        """
+        Provides a context manager for an asynchronous database session and ensures that tables exist.
+
+        Yields:
+            AsyncIterator[AsyncSession]: The asynchronous database session.
+
+        Raises:
+            HTTPException: If the session maker is not initialized.
+        """
         if self._sessionmaker is None:
             raise HTTPException(status_code=500, detail="Database could not be initialized.")
 
@@ -71,6 +98,12 @@ sessionmanager = DatabaseSessionManager("sqlite+aiosqlite:///../sqlite/sqlite.db
 
 
 async def get_db_session():
+    """
+    Dependency function to provide a singleton database session.
+
+    Yields:
+        AsyncSession: The asynchronous database session.
+    """
     async with sessionmanager.session() as session:
         yield session
 

@@ -7,6 +7,8 @@ from src.models.responseModels.acounts_response_model import TransactionResponse
 
 
 class PaymentDetailResponseModel(BaseModel):
+    """Payment detail response model."""
+
     amount: float
     description: str
     paid_by: str
@@ -14,6 +16,8 @@ class PaymentDetailResponseModel(BaseModel):
 
 
 class GroupHistoryResponseModel(BaseModel):
+    """Group history response model."""
+
     type: EventType
     creator: str
     datetime: datetime
@@ -21,17 +25,23 @@ class GroupHistoryResponseModel(BaseModel):
 
 
 class PaymentResponseModel(BaseModel):
+    """Payment response model."""
+
     description: str
     amount: float
 
 
 class UserResponseModel(BaseModel):
+    """User response model."""
+
     user_name: str
     sum_amount: float
     payments: list[PaymentResponseModel]
 
 
 class GroupResponseModel(BaseModel):
+    """Group response model."""
+
     uuid: str
     title: str
     users: list[UserResponseModel]

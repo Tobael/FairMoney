@@ -5,6 +5,8 @@ from src.models.orm.orm_base import ORMBase
 
 
 class Transaction(ORMBase):
+    """ORM Class for Transaction Table."""
+
     __tablename__ = "transaction"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -18,7 +20,9 @@ class Transaction(ORMBase):
     amount: Mapped[float]
 
     # Relationship
-    accounting: Mapped["Accounting"] = relationship(back_populates="transactions")
+    accounting: Mapped["Accounting"] = relationship(back_populates="transactions")  # noqa: F821
 
-    payment_from_user: Mapped["User"] = relationship(foreign_keys=payment_from, back_populates="transactions_from")
-    payment_to_user: Mapped["User"] = relationship(foreign_keys=payment_to, back_populates="transactions_to")
+    payment_from_user: Mapped["User"] = relationship(foreign_keys=payment_from,  # noqa: F821
+                                                     back_populates="transactions_from")
+    payment_to_user: Mapped["User"] = relationship(foreign_keys=payment_to,  # noqa: F821
+                                                   back_populates="transactions_to")

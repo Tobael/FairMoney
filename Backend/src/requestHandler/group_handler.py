@@ -18,6 +18,15 @@ from src.shared.db_query_service import DatabaseServiceDep
 
 
 def convert_group_to_response_model(group: Group) -> GroupResponseModel:
+    """
+    Converts a Group object to a GroupResponseModel.
+
+    Args:
+        group (Group): The group object to convert.
+
+    Returns:
+        GroupResponseModel: The response model representing the group.
+    """
     user_payments: dict[str, list[PaymentResponseModel]] = {user.name: [] for user in group.users}
 
     for payment in group.payments:
@@ -41,12 +50,29 @@ def convert_group_to_response_model(group: Group) -> GroupResponseModel:
 
 
 class GroupHandler:
+    """
+    Handles operations related to groups.
+
+    Attributes:
+        database_service (DatabaseServiceDep): The database service dependency.
+    """
+
     def __init__(self, database_service: DatabaseServiceDep) -> None:
         self.database_service = database_service
 
     async def create_group(self,
                            request_model: GroupCreateRequestModel,
                            user_name: str) -> GroupResponseModel:
+        """
+        Creates a new group.
+
+        Args:
+            request_model (GroupCreateRequestModel): The request model containing the group creation details.
+            user_name (str): The name of the user creating the group.
+
+        Returns:
+            GroupResponseModel: The response model representing the created group.
+        """
         user_names = [user.name for user in request_model.users]
 
         if len(user_names) != len(set(user_names)):
@@ -78,11 +104,30 @@ class GroupHandler:
         return convert_group_to_response_model(result)
 
     async def get_group(self, group_id: str) -> GroupResponseModel:
+        """
+        Retrieves the details of a group.
+
+        Args:
+            group_id (str): The ID of the group to retrieve.
+
+        Returns:
+            GroupResponseModel: The response model representing the group.
+        """
         group = await self.database_service.get_group(group_uuid=group_id)
 
         return convert_group_to_response_model(group)
 
     async def close_group(self, group_id: str, user_name: str) -> None:
+        """
+        Closes a group.
+
+        Args:
+            group_id (str): The ID of the group to close.
+            user_name (str): The name of the user closing the group.
+
+        Returns:
+            None
+        """
         group = await self.database_service.get_group(group_uuid=group_id)
 
         try:
@@ -98,6 +143,15 @@ class GroupHandler:
         await self.database_service.commit()
 
     async def get_group_history(self, group_id: str) -> list[GroupHistoryResponseModel]:
+        """
+        Retrieves the history of a group.
+
+        Args:
+            group_id (str): The ID of the group to retrieve the history for.
+
+        Returns:
+            list[GroupHistoryResponseModel]: A list of response models representing the group's history.
+        """
         group = await self.database_service.get_group(group_uuid=group_id)
 
         group_history: list[GroupHistoryResponseModel] = [

@@ -9,6 +9,13 @@ from src.shared.db_query_service import DatabaseServiceDep
 
 
 class PaymentHandler:
+    """
+    Handles operations related to payments.
+
+    Attributes:
+        database_service (DatabaseServiceDep): The database service dependency.
+    """
+
     def __init__(self, database_service: DatabaseServiceDep) -> None:
         self.database_service = database_service
 
@@ -16,6 +23,17 @@ class PaymentHandler:
                              group_id: str,
                              request_model: PaymentRequestModel,
                              user_name: str) -> None:
+        """
+        Creates a payment entry for a group.
+
+        Args:
+            group_id (str): The ID of the group for which to create the payment.
+            request_model (PaymentRequestModel): The request model containing the payment details.
+            user_name (str): The name of the user creating the payment.
+
+        Returns:
+            None
+        """
         group = await self.database_service.get_group(group_id)
 
         if group.closed:

@@ -7,6 +7,8 @@ from src.models.orm.orm_base import ORMBase
 
 
 class Accounting(ORMBase):
+    """ORM Class for Accounting Table."""
+
     __tablename__ = "accounting"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -18,9 +20,9 @@ class Accounting(ORMBase):
     created_by: Mapped[int] = mapped_column(ForeignKey("user.id"))
 
     # Relationship
-    group: Mapped["Group"] = relationship(back_populates="accountings")
-    balances: Mapped[list["Payment"]] = relationship(back_populates="balanced_by_accounting")
+    group: Mapped["Group"] = relationship(back_populates="accountings")  # noqa: F821
+    balances: Mapped[list["Payment"]] = relationship(back_populates="balanced_by_accounting")  # noqa: F821
 
-    transactions: Mapped[list["Transaction"]] = relationship(back_populates="accounting")
+    transactions: Mapped[list["Transaction"]] = relationship(back_populates="accounting")  # noqa: F821
 
-    created_by_user: Mapped["User"] = relationship(back_populates="accountings_created")
+    created_by_user: Mapped["User"] = relationship(back_populates="accountings_created")  # noqa: F821

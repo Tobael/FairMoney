@@ -2,6 +2,7 @@ from sqlalchemy import ForeignKey, Table, Column
 
 from src.models.orm.orm_base import ORMBase
 
+# Table for Payment-Participants n:m Mapping.
 payment_participants_table = Table(
     "payment_participants",
     ORMBase.metadata,

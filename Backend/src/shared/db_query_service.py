@@ -20,20 +20,28 @@ from src.shared.db_session_manager import DBSessionDep
 
 
 class DatabaseService:
+    """
+    Service class that supports the read and operations to the database.
+
+    Attributes:
+        db_session (DBSessionDep): The database session dependency.
+    """
 
     def __init__(self,
                  db_session: DBSessionDep) -> None:
-        """
-        Service class that supports the read and write operations to the database.
-
-        Returns:
-            None
-        """
         self.db_session = db_session
 
     async def create_initial_group(self,
                                    group: Group) -> str:
+        """
+        Creates an initial group in the database.
 
+        Args:
+            group (Group): The group object containing the group details.
+
+        Returns:
+            str: The UUID of the created group.
+        """
         group_uuid = await self._get_unique_uuid(id_type=UniqueIdType.Group)
 
         new_group = ORMGroup(uuid=group_uuid,
@@ -55,12 +63,21 @@ class DatabaseService:
             self.db_session.add(new_group)
         except Exception:
             await self.db_session.rollback()
-            raise HTTPException(status_code=500, detail=f"Group could not be created due to an internal error.")
+            raise HTTPException(status_code=500, detail="Group could not be created due to an internal error.")
 
         return group_uuid
 
     async def _get_group(self,
                          group_uuid: str) -> ORMGroup:
+        """
+        Retrieves a group from the database by its UUID. For internal use only.
+
+        Args:
+            group_uuid (str): The UUID of the group to retrieve.
+
+        Returns:
+            ORMGroup: The ORM group object.
+        """
         query = select(ORMGroup).where(ORMGroup.uuid == group_uuid).options(selectinload(ORMGroup.payments)
                                                                             .selectinload(ORMPayment.participants),
                                                                             selectinload(ORMGroup.users),
@@ -72,7 +89,15 @@ class DatabaseService:
 
     async def get_group(self,
                         group_uuid: str) -> Group:
+        """
+        Retrieves a group and its related data from the database.
 
+        Args:
+            group_uuid (str): The UUID of the group to retrieve.
+
+        Returns:
+            Group: The group object with related data.
+        """
         db_group = await self._get_group(group_uuid=group_uuid)
 
         if db_group is None:
@@ -129,6 +154,16 @@ class DatabaseService:
     async def create_payment(self,
                              group_uuid: str,
                              payment: Payment) -> None:
+        """
+        Creates a payment entry for a group.
+
+        Args:
+            group_uuid (str): The UUID of the group for which to create the payment.
+            payment (Payment): The payment object containing the payment details.
+
+        Returns:
+            None
+        """
         payment_uuid = await self._get_unique_uuid(id_type=UniqueIdType.PAYMENT)
 
         group = await self._get_group(group_uuid)
@@ -152,12 +187,21 @@ class DatabaseService:
             self.db_session.add(new_payment)
         except Exception:
             await self.db_session.rollback()
-            raise HTTPException(status_code=500, detail=f"Payment could not be created due to an internal error.")
+            raise HTTPException(status_code=500, detail="Payment could not be created due to an internal error.")
 
     async def create_accounting(self,
                                 group_uuid: str,
                                 accounting: Accounting) -> None:
+        """
+        Creates an accounting entry for a group.
 
+        Args:
+            group_uuid (str): The UUID of the group for which to create the accounting.
+            accounting (Accounting): The accounting object containing the accounting details.
+
+        Returns:
+            None
+        """
         accounting_uuid = await self._get_unique_uuid(id_type=UniqueIdType.ACCOUNTING)
 
         group = await self._get_group(group_uuid)
@@ -195,10 +239,19 @@ class DatabaseService:
                 self.db_session.add(transaction)
         except Exception:
             await self.db_session.rollback()
-            raise HTTPException(status_code=500, detail=f"Accounting could not be created due to an internal error.")
+            raise HTTPException(status_code=500, detail="Accounting could not be created due to an internal error.")
 
     async def close_group(self,
                           group: Group) -> None:
+        """
+        Closes a group.
+
+        Args:
+            group (Group): The group object containing the group details.
+
+        Returns:
+            None
+        """
         db_group = await self._get_group(group_uuid=group.uuid)
 
         closed_by_user = next((user for user in db_group.users if user.uuid == group.closed_by.uuid))
@@ -208,6 +261,12 @@ class DatabaseService:
         db_group.closed_at = group.closed_at
 
     async def commit(self) -> None:
+        """
+        Commits the current transaction to the database.
+
+        Returns:
+            None
+        """
         try:
             await self.db_session.commit()
         except Exception as e:
@@ -215,6 +274,18 @@ class DatabaseService:
             raise HTTPException(status_code=500, detail=f"Database connection raised an internal error: {e}")
 
     async def _get_unique_uuid(self, id_type: UniqueIdType) -> str:
+        """
+        Generates a unique UUID for a entity type.
+
+        Args:
+            id_type (UniqueIdType): The type of entity for which to generate the UUID.
+
+        Returns:
+            str: The generated unique UUID.
+
+        Raises:
+            HTTPException: If a unique UUID could not be generated after multiple attempts.
+        """
         retries = 20
 
         orm_class_mapping = {
@@ -237,7 +308,7 @@ class DatabaseService:
             if count == 0:
                 return new_uuid
             retries = retries - 1
-        raise HTTPException(status_code=500, detail=f"Could not generate a unique uuid.")
+        raise HTTPException(status_code=500, detail="Could not generate a unique uuid.")
 
 
 DatabaseServiceDep = Annotated[DatabaseService, Depends(DatabaseService)]

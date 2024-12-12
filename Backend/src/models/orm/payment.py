@@ -8,6 +8,8 @@ from src.models.orm.payment_participants import payment_participants_table
 
 
 class Payment(ORMBase):
+    """ORM Class for Accounting Table."""
+
     __tablename__ = "payment"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -25,12 +27,12 @@ class Payment(ORMBase):
     created_by: Mapped[int] = mapped_column(ForeignKey("user.id"))
 
     # Relationship
-    group: Mapped["Group"] = relationship(back_populates="payments")
-    paid_by_user: Mapped["User"] = relationship(foreign_keys=[paid_by], back_populates="payments_paid")
-    balanced_by_accounting: Mapped["Accounting"] = relationship(back_populates="balances")
+    group: Mapped["Group"] = relationship(back_populates="payments")  # noqa: F821
+    paid_by_user: Mapped["User"] = relationship(foreign_keys=[paid_by], back_populates="payments_paid")  # noqa: F821
+    balanced_by_accounting: Mapped["Accounting"] = relationship(back_populates="balances")  # noqa: F821
 
-    participants: Mapped[list["User"]] = relationship(back_populates="payments_participant",
+    participants: Mapped[list["User"]] = relationship(back_populates="payments_participant",  # noqa: F821
                                                       secondary=payment_participants_table)
 
-    created_by_user: Mapped["User"] = relationship(foreign_keys=created_by,
+    created_by_user: Mapped["User"] = relationship(foreign_keys=created_by,  # noqa: F821
                                                    back_populates="payments_created")

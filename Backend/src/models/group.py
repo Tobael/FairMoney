@@ -6,6 +6,8 @@ from src.models.user import User
 
 
 class Group:
+    """Group mode."""
+
     def __init__(self,
                  title: str,
                  closed: bool,
@@ -31,5 +33,11 @@ class Group:
         self.closed_by = closed_by
 
     def __str__(self) -> str:
+        """
+        Returns the string representation of the Group object.
+
+        Returns:
+            str: The details of the group.
+        """
         return (f"{self.title} {'(Closed)' if self.closed else ''} (User: {len(self.users)}, "
                 f"Payments: {len(self.payments)}, Accountings: {len(self.accountings)})")
