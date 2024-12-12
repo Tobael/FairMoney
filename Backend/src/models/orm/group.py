@@ -1,9 +1,8 @@
 from datetime import datetime
 
+from models.orm.orm_base import ORMBase
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-
-from src.models.orm.orm_base import ORMBase
 
 
 class Group(ORMBase):
@@ -19,7 +18,7 @@ class Group(ORMBase):
     created_at: Mapped[datetime]
     created_by: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=True)
 
-    closed_at: Mapped[datetime]
+    closed_at: Mapped[datetime] = mapped_column(nullable=True)
     closed_by: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=True)
 
     # Relationship

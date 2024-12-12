@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from src.models.accounting import Accounting
-from src.models.payment import Payment
-from src.models.user import User
+from models.accounting import Accounting
+from models.payment import Payment
+from models.user import User
 
 
 class Group:

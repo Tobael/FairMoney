@@ -1,6 +1,4 @@
-
-#accounting_item_container {
-  justify-self: center;
+.accounting_item_container {
   width: 80%;
   display: grid;
   grid-template-columns: 1fr .5fr 1fr 1fr;
@@ -10,6 +8,11 @@
   align-items: center;
 }
 
-#accounting_item_amount {
+.accounting_item_amount {
   white-space: nowrap;
+}
+
+.accounting_item_arrow {
+  margin-top: 5px;
+  font-size: 1.5em;
 }

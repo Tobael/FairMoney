@@ -5,18 +5,18 @@ from fastapi import Depends, HTTPException
 from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 
-from src.models.accounting import Accounting
-from src.models.enumerations.uuid_types import UniqueIdType
-from src.models.group import Group as Group
-from src.models.orm.accounting import Accounting as ORMAccounting
-from src.models.orm.group import Group as ORMGroup
-from src.models.orm.payment import Payment as ORMPayment
-from src.models.orm.transaction import Transaction as ORMTransaction
-from src.models.orm.user import User as ORMUser
-from src.models.payment import Payment as Payment
-from src.models.transaction import Transaction
-from src.models.user import User
-from src.shared.db_session_manager import DBSessionDep
+from models.accounting import Accounting
+from models.enumerations.uuid_types import UniqueIdType
+from models.group import Group as Group
+from models.orm.accounting import Accounting as ORMAccounting
+from models.orm.group import Group as ORMGroup
+from models.orm.payment import Payment as ORMPayment
+from models.orm.transaction import Transaction as ORMTransaction
+from models.orm.user import User as ORMUser
+from models.payment import Payment as Payment
+from models.transaction import Transaction
+from models.user import User
+from shared.db_session_manager import DBSessionDep
 
 
 class DatabaseService:

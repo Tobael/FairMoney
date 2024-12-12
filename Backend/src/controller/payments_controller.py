@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Header
 
-from src.models.requestModels.payment_request_model import PaymentRequestModel
-from src.requestHandler.payments_handler import PaymentHandlerDependency
+from models.requestModels.payment_request_model import PaymentRequestModel
+from requestHandler.payments_handler import PaymentHandlerDependency
 
 payments_router = APIRouter(
     tags=["payment"]

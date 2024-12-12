@@ -20,7 +20,6 @@ export const createGroup = async (group) => {
         redirect: "follow",
     };
 
-    //return await fetch("http://192.168.178.30:8001/group", requestOptions);
     return await fetchApi("group", requestOptions);
 };
 
@@ -34,10 +33,7 @@ export const fetchGroup = async (uuid) => {
         redirect: "follow",
     };
 
-
-    //  return await fetch(`${baseUrl}/group/${uuid}`, requestOptions);
     return await fetchApi(`group/${uuid}`, requestOptions);
-
 };
 
 export const closeGroup = async (uuid, user_name) => {
@@ -49,7 +45,6 @@ export const closeGroup = async (uuid, user_name) => {
         redirect: "follow",
     };
 
-    //return await fetch(`${baseUrl}/group/${uuid}/close`, requestOptions);
     return await fetchApi(`group/${uuid}/close`, requestOptions);
 }
 export const fetchGroupHistory = async (uuid) => {
@@ -61,7 +56,6 @@ export const fetchGroupHistory = async (uuid) => {
         redirect: "follow",
     };
 
-    //return await fetch(`${baseUrl}/group/${uuid}/history`, requestOptions);
     return await fetchApi(`group/${uuid}/history`, requestOptions);
 }
 export const createPayment = async (uuid, payment, user_name) => {
@@ -81,7 +75,6 @@ export const createPayment = async (uuid, payment, user_name) => {
         redirect: "follow",
     };
 
-    // return await fetch(`${baseUrl}/group/${uuid}/payment`, requestOptions);
     return await fetchApi(`group/${uuid}/payment`, requestOptions);
 }
 export const fetchAccountingPreview = async (uuid) => {
@@ -93,7 +86,6 @@ export const fetchAccountingPreview = async (uuid) => {
         redirect: "follow",
     };
 
-    // return await fetch(`${baseUrl}/group/${uuid}/accounting/preview`, requestOptions);
     return await fetchApi(`group/${uuid}/accounting/preview`, requestOptions);
 }
 export const createAccounting = async (uuid, user_name) => {
@@ -105,13 +97,12 @@ export const createAccounting = async (uuid, user_name) => {
         redirect: "follow",
     };
 
-    // return await fetch(`${baseUrl}/group/${uuid}/accounting`, requestOptions);
     return await fetchApi(`group/${uuid}/accounting`, requestOptions);
 }
 
 const fetchApi = async (url, requestOptions) => {
     try {
-        return await fetch(`${process.env.BACKEND_URL}/${url}`, requestOptions);
+        return await fetch(`${BACKEND_URL}/${url}`, requestOptions);
     } catch (error) {
         showErrorPage(error)
         throw error;
@@ -129,4 +120,4 @@ const get_headers = (user_name) => {
     return headers;
 }
 
-const baseUrl = "http://192.168.178.30:8001"
+const BACKEND_URL = "http://localhost:8003"

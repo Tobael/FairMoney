@@ -3,9 +3,9 @@ from typing import Annotated
 
 from fastapi import Depends, HTTPException
 
-from src.models.payment import Payment
-from src.models.requestModels.payment_request_model import PaymentRequestModel
-from src.shared.db_query_service import DatabaseServiceDep
+from models.payment import Payment
+from models.requestModels.payment_request_model import PaymentRequestModel
+from shared.db_query_service import DatabaseServiceDep
 
 
 class PaymentHandler:

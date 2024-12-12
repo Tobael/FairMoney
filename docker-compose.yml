@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: fairmoney-backend
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./backend_db:/app/sqlite/
+    environment:
+      - DB_PATH=/app/sqlite/sqlite.db
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: fairmoney-frontend
+    ports:
+      - "8002:80"
+    stdin_open: true
+    tty: true
