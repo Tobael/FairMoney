@@ -4,17 +4,17 @@ from typing import Annotated
 
 from fastapi import Depends, HTTPException
 
-from src.models.enumerations.event_types import EventType
-from src.models.group import Group
-from src.models.requestModels.group_request_model import GroupCreateRequestModel
-from src.models.responseModels.group_response_model import (GroupResponseModel,
-                                                            GroupHistoryResponseModel,
-                                                            UserResponseModel,
-                                                            PaymentResponseModel,
-                                                            PaymentDetailResponseModel,
-                                                            TransactionResponseModel)
-from src.models.user import User
-from src.shared.db_query_service import DatabaseServiceDep
+from models.enumerations.event_types import EventType
+from models.group import Group
+from models.requestModels.group_request_model import GroupCreateRequestModel
+from models.responseModels.group_response_model import (GroupResponseModel,
+                                                        GroupHistoryResponseModel,
+                                                        UserResponseModel,
+                                                        PaymentResponseModel,
+                                                        PaymentDetailResponseModel,
+                                                        TransactionResponseModel)
+from models.user import User
+from shared.db_query_service import DatabaseServiceDep
 
 
 def convert_group_to_response_model(group: Group) -> GroupResponseModel:
@@ -42,6 +42,7 @@ def convert_group_to_response_model(group: Group) -> GroupResponseModel:
         title=group.title,
         users=[UserResponseModel(
             user_name=user.name,
+            paypal_me=user.paypal_me_link,
             sum_amount=functools.reduce(lambda x, y: x + y.amount, user_payments[user.name], 0),
             payments=user_payments[user.name]
         ) for user in group.users],
@@ -192,7 +193,7 @@ class GroupHandler:
                 details=None
             ))
 
-        group_history.sort(key=lambda x: x.datetime)
+        group_history.sort(key=lambda x: x.datetime, reverse=True)
 
         return group_history
 

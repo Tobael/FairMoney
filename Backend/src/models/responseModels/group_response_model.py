@@ -2,8 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from src.models.enumerations.event_types import EventType
-from src.models.responseModels.acounts_response_model import TransactionResponseModel
+from models.enumerations.event_types import EventType
+from models.responseModels.acounts_response_model import TransactionResponseModel
 
 
 class PaymentDetailResponseModel(BaseModel):
@@ -35,6 +35,7 @@ class UserResponseModel(BaseModel):
     """User response model."""
 
     user_name: str
+    paypal_me: str
     sum_amount: float
     payments: list[PaymentResponseModel]
 

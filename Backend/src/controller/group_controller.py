@@ -2,9 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Header
 
-from src.models.requestModels.group_request_model import GroupCreateRequestModel
-from src.models.responseModels.group_response_model import GroupHistoryResponseModel, GroupResponseModel
-from src.requestHandler.group_handler import GroupHandlerDependency
+from models.requestModels.group_request_model import GroupCreateRequestModel
+from models.responseModels.group_response_model import GroupHistoryResponseModel, GroupResponseModel
+from requestHandler.group_handler import GroupHandlerDependency
 
 group_router = APIRouter(
     tags=["group"]

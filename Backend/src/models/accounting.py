@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from src.models.transaction import Transaction
-from src.models.user import User
+from models.transaction import Transaction
+from models.user import User
 
 
 class Accounting:

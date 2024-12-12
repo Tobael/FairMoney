@@ -1,8 +1,6 @@
-@import "../../../../index";
+@use "../../../../index" as *;
 
 #overview_button_container {
-  position: sticky;
-  bottom: 10px;
   display: flex;
   flex-direction: row;
   gap: 25px;
@@ -34,4 +32,5 @@
   overflow-y: auto;
   gap: 50px;
   width: 70%;
+  flex: 1;
 }

@@ -1,11 +1,11 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from src.models.orm.group import Group
-from src.models.orm.orm_base import ORMBase
-from src.models.orm.payment import Payment
-from src.models.orm.payment_participants import payment_participants_table
-from src.models.orm.transaction import Transaction
+from models.orm.group import Group
+from models.orm.orm_base import ORMBase
+from models.orm.payment import Payment
+from models.orm.payment_participants import payment_participants_table
+from models.orm.transaction import Transaction
 
 
 class User(ORMBase):

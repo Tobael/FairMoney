@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Header
 
-from src.models.responseModels.acounts_response_model import TransactionResponseModel
-from src.requestHandler.accounting_handler import AccountingHandlerDependency
+from models.responseModels.acounts_response_model import TransactionResponseModel
+from requestHandler.accounting_handler import AccountingHandlerDependency
 
 accounting_router = APIRouter(
     tags=["accounting"]

@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from src.models.orm.orm_base import ORMBase
+from models.orm.orm_base import ORMBase
 
 
 class Transaction(ORMBase):

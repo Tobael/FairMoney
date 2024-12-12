@@ -9,4 +9,11 @@ export default defineConfig({
         port: 5173,
         strictPort: true,
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                api: 'modern-compiler' // or "modern"
+            }
+        }
+    }
 })

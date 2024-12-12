@@ -7,10 +7,10 @@ from starlette import status
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 
-from src.controller.accounting_controller import accounting_router
-from src.controller.group_controller import group_router
-from src.controller.payments_controller import payments_router
-from src.shared.db_session_manager import sessionmanager
+from controller.accounting_controller import accounting_router
+from controller.group_controller import group_router
+from controller.payments_controller import payments_router
+from shared.db_session_manager import sessionmanager
 
 
 @asynccontextmanager
