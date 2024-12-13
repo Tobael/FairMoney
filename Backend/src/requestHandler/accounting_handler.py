@@ -41,118 +41,80 @@ class AccountingHandler:
     def __init__(self, database_service: DatabaseServiceDep) -> None:
         self.database_service = database_service
 
-    def minimize_transactions_from_balances(self, balances):
+    def _minimize_transactions(self, balances: dict[User, float]) -> list[tuple[User, User, float]]:
         """
-        Minimize the number of transactions required to settle debts from balances.
+        Greedy algorithm to minimizes the number of transactions needed to settle balances between users.
 
         Args:
-            balances (dict): A dictionary where keys are person names and values are their net balances.
-                             Positive values indicate credit (they are owed money),
-                             Negative values indicate debt (they owe money).
+            balances (dict[User, float]): A dictionary mapping users to their balance amounts.
 
         Returns:
-            list of tuples: Optimized list of transactions in the form (debtor, creditor, amount).
+            list[tuple[User, User, float]]: A list of tuples representing the minimized transactions.
         """
-        # Step 1: Create a list of net balances
-        net_balances = [balance for balance in balances.values() if balance != 0]
+        # Split into creditors and debtors
+        creditors = [(user, balance) for user, balance in balances.items() if balance > 0]
+        debtors = [(user, balance) for user, balance in balances.items() if balance < 0]
 
-        # Base case: If all balances are settled
-        if not net_balances:
-            return []
-
-        # Step 2: Find the first non-zero balance and try to settle it
-        first = net_balances[0]
-        settlements = []
-
-        for i in range(1, len(net_balances)):
-            # Attempt to settle 'first' with net_balances[i]
-            net_balances[i] += first
-
-            # Recursive call to settle the remaining balances
-            sub_settlements = self.minimize_transactions_from_balances(
-                {k: v for k, v in zip(balances.keys(), net_balances) if v != 0}
-            )
-
-            # Add the current settlement
-            current_settlement = [(list(balances.keys())[0], list(balances.keys())[i], -first)]
-            all_settlements = current_settlement + sub_settlements
-
-            # Restore original balance for backtracking
-            net_balances[i] -= first
-
-            # If this is the optimal solution so far, keep it
-            if not settlements or len(all_settlements) < len(settlements):
-                settlements = all_settlements
-
-        return settlements
-
-    def minimize_transactions(self, expenses: dict[User, float]):
-        # Berechne den Nettosaldo jeder Person
-        balances = {}
-        for person, amount in expenses.items():
-            balances[person] = balances.get(person, 0) + amount
-
-        # Trenne die Personen in Gläubiger und Schuldner
-        creditors = []
-        debtors = []
-        for person, balance in balances.items():
-            if balance > 0:
-                creditors.append((person, balance))
-            elif balance < 0:
-                debtors.append((person, -balance))
-
-        # Sortiere Gläubiger und Schuldner nach der Höhe ihrer Forderungen bzw. Schulden
+        # Sort creditors and debtors according to the amount of their claims or debts
         creditors.sort(key=lambda x: x[1], reverse=True)
         debtors.sort(key=lambda x: x[1], reverse=True)
 
         transactions = []
 
-        # Minimiere die Anzahl der Transaktionen
+        # Minimize the number of transactions
         while creditors and debtors:
+            # Get the first creditor and debtor
             creditor, credit_amount = creditors.pop(0)
             debtor, debt_amount = debtors.pop(0)
 
+            # Determine the transaction amount as the minimum of the credit and debt amounts
             transaction_amount = min(credit_amount, debt_amount)
             transactions.append((debtor, creditor, transaction_amount))
 
+            # Adjust the remaining credit or debt and reinsert into the list if not settled
             if credit_amount > debt_amount:
-                creditors.insert(0, (creditor, credit_amount - transaction_amount))
+                creditors.append((creditor, credit_amount - transaction_amount))
+                creditors.sort(key=lambda x: x[1], reverse=True)
             elif debt_amount > credit_amount:
-                debtors.insert(0, (debtor, debt_amount - transaction_amount))
+                debtors.append((debtor, debt_amount - transaction_amount))
+                debtors.sort(key=lambda x: x[1], reverse=True)
 
         return transactions
 
     async def _calculate_transactions(self, group: Group) -> list[Transaction]:
+        """
+        Calculates the transactions needed to settle all payments within a group.
 
-        fabi = group.users[0]
-        krissi = group.users[1]
+        Args:
+            group (Group): The group object containing the payments.
 
-        soldo_dict: dict[User, float] = {}
+        Returns:
+            list[Transaction]: A list of transactions needed to settle the group's payments.
+        """
+        saldo_dict: dict[User, float] = {}
 
         for payment in group.payments:
-            if payment.paid_by not in soldo_dict:
-                soldo_dict[payment.paid_by] = 0.0
-            soldo_dict[payment.paid_by] += payment.amount
+            if payment.paid_by not in saldo_dict:
+                saldo_dict[payment.paid_by] = 0.0
+            saldo_dict[payment.paid_by] += payment.amount
 
+            amount_per_participant = payment.amount / len(payment.participants)
             for participant in payment.participants:
-                amount_per_participant = payment.amount / len(payment.participants)
-                if participant not in soldo_dict:
-                    soldo_dict[participant] = 0.0
-                soldo_dict[participant] -= amount_per_participant
+                if participant not in saldo_dict:
+                    saldo_dict[participant] = 0.0
+                saldo_dict[participant] -= amount_per_participant
 
-        for key, value in soldo_dict.items():
-            soldo_dict[key] = math.ceil(value * 100) / 100
+        for key, value in saldo_dict.items():
+            saldo_dict[key] = math.ceil(value * 100) / 100
 
-        x = self.minimize_transactions(soldo_dict)
-        # y = self.minimize_transactions_from_balances(soldo_dict)
+        transactions = self._minimize_transactions(saldo_dict)
 
-        # Todo: Implement the logic to calculate the accounting
         return [
             Transaction(
                 payment_from=debtor,
                 payment_to=creditor,
                 amount=transaction_amount
-            ) for debtor, creditor, transaction_amount in x
+            ) for debtor, creditor, transaction_amount in transactions
         ]
 
     async def get_accounting_preview(self,
