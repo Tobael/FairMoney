@@ -59,4 +59,4 @@ def get_default_docs() -> RedirectResponse:
 
 # Run the app
 if __name__ == "__main__":
-    uvicorn.run("__main__:app", port=8001, host='0.0.0.0', reload=True)
+    uvicorn.run("__main__:app", port=8003, host='0.0.0.0', reload=True)
