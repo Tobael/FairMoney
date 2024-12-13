@@ -16,14 +16,12 @@ Easily share your expenses with your friends, colleagues or any other group of y
 - React
 - Mui
 
----
 
 ## Folders
 - **./Backend:** Application Code for Backend
 - **./Frontend:** Application Code for Frontend
 - **./Docs:** Documents created for IU: DLMCSPSE01_D
 
----
 
 ## How to run the application
 
