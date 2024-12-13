@@ -9,6 +9,7 @@ import GroupHistory from "./views/GroupHistory/GroupHistory.jsx";
 import GroupCreateAccounting from "./views/GroupCreateAccounting/GroupCreateAccounting.jsx";
 import GroupAccountingOverview from "./views/GroupAccountingOverview/GroupAccountingOverview.jsx";
 import {ManageGroupViews} from "../../shared/enums.js";
+import {showErrorPage} from "../../shared/error.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({params}) {
@@ -29,7 +30,7 @@ export default function ManageGroup() {
             setGroup(data);
             return data
         } else {
-            //showErrorPage(result)
+            showErrorPage(result)
         }
     }, [groupId]);
 
