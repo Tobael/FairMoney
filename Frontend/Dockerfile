@@ -20,8 +20,8 @@ FROM nginx
 COPY --from=0 /app/dist /usr/share/nginx/html
 
 # Copy custom Nginx configuration
-COPY build/default.conf /etc/nginx/conf.d/default.conf
-COPY build/nginx.conf /etc/nginx/nginx.conf
+COPY docker/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 # Set permissions for non-root user
 RUN chown -R 1001:1001 /var/cache/nginx && \
