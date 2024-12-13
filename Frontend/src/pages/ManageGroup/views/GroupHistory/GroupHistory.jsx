@@ -11,7 +11,9 @@ export default function GroupHistory({onBackClick, group, login}) {
     const [history, setHistory] = React.useState(null)
     const [showHistory, setShowHistory] = React.useState(false)
 
-
+    /**
+     * Fetches the history and mounts the entries after completion.
+     */
     useEffect(() => {
         const getHistory = async () => {
             const result = await fetchGroupHistory(group.uuid)
@@ -28,11 +30,11 @@ export default function GroupHistory({onBackClick, group, login}) {
 
 
     return (
-        <div id="group_history_container" className="default_page_container">
+        <div id="group-history-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text headline_less_space">Hallo {login}, das ist in der Gruppe passiert.</div>
+            <div className="headline-text headline-less-space">Hallo {login}, das ist in der Gruppe passiert.</div>
             {showHistory && (
-                <div id="history_container">
+                <div id="history-container">
                     {history && history.map((item, idx) => (<HistoryItem key={idx}
                                                                          group={group}
                                                                          item={item}/>))}

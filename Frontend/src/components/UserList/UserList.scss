@@ -1,12 +1,12 @@
 @use '../../index' as *;
 
-#user_list_container {
+#user-list-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.user_label {
+.user-label {
   font-size: 1.2rem;
   font-weight: bold;
   color: $font-color;
@@ -17,7 +17,7 @@
   flex-direction: row;
 }
 
-.person_icon {
+.person-icon {
   margin-top: 3px;
   margin-right: 10px;
   background-color: $primary-color;

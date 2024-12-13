@@ -12,6 +12,9 @@ import {ThemeProvider} from "@mui/material/styles";
 import {theme} from "./themes/themes.js";
 import ErrorPage from "./pages/Error/Error.jsx";
 
+/**
+ * Defines the routes for the application using react-router-dom.
+ */
 const router = createBrowserRouter([
     {
         path: "/",
@@ -28,6 +31,9 @@ const router = createBrowserRouter([
     },
 ]);
 
+/**
+ * Renders the root component of the application using react-router.
+ */
 createRoot(document.getElementById("root")).render(
     <ThemeProvider theme={theme}>
         <StrictMode>

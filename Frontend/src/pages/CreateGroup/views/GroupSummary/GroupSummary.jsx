@@ -7,48 +7,61 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import UserList from "../../../../components/UserList/UserList.jsx";
 import {getGroupJoinMessage, getUrl} from "../../../../shared/messages.js";
 
-const GroupSummary = ({groupId, groupTitle, creator, groupMember, onBackClick}) => {
+/**
+ * View for displaying the group summary after the group was created.
+ *
+ * @returns {JSX.Element} - The GroupSummary component.
+ */
+export default function GroupSummary({groupId, groupTitle, creator, groupMember, onBackClick}) {
     const navigate = useNavigate();
 
+    /**
+     * Redirects to the group page.
+     */
     const redirectToGroup = () => {
         navigate(`/${groupId}`);
     };
 
+    /**
+     * Writes the group URL to the clipboard.
+     */
     const writeUrlToClipboard = () => {
         navigator.clipboard.writeText(getUrl(groupId))
     }
-
+    /**
+     * Writes the group join message to the clipboard.
+     */
     const writeMessageToClipboard = () => {
         navigator.clipboard.writeText(getGroupJoinMessage(groupTitle, groupId))
     }
 
     return (
-        <div id="group_summary_container" className="default_page_container">
+        <div id="group-summary-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text headline_less_space">
+            <div className="headline-text headline-less-space">
                 Deine neue Gruppe wurde erstellt.
             </div>
 
-            <div id="url_text">
+            <div id="url-text">
                 {getUrl(groupId)}
-                <IconButton id="copy_icon" onClick={() => writeUrlToClipboard()}>
+                <IconButton id="copy-icon" onClick={() => writeUrlToClipboard()}>
                     <ContentCopyIcon/>
                 </IconButton>
             </div>
             <Button
-                id="btn_copy_join_msg"
+                id="btn-copy-join-msg"
                 variant="default"
                 onClick={() => writeMessageToClipboard()}
             >
                 Einladungsnachricht kopieren
             </Button>
-            <div id="box_group_member_summary">
+            <div id="box-group-member-summary">
                 <UserList
                     creator={creator}
                     users={groupMember}/>
             </div>
             <Button
-                id="btn_join_group"
+                id="btn-join-group"
                 variant="default"
                 onClick={() => redirectToGroup()}
             >
@@ -59,4 +72,3 @@ const GroupSummary = ({groupId, groupTitle, creator, groupMember, onBackClick}) 
     );
 };
 
-export default GroupSummary;

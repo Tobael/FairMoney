@@ -1,3 +1,8 @@
+/**
+ * Enum for views in the Create Group process.
+ * @readonly
+ * @enum {number}
+ */
 export const CreateGroupViews = Object.freeze({
     LandingPage: 0,
     GroupTitle: 1,
@@ -6,6 +11,11 @@ export const CreateGroupViews = Object.freeze({
     GroupSummary: 4
 });
 
+/**
+ * Enum for views in the Manage Group process.
+ * @readonly
+ * @enum {string|number}
+ */
 export const ManageGroupViews = Object.freeze({
     None: "none",
     GroupLogin: 1,

@@ -1,6 +1,6 @@
 @use '../../index' as *;
 
-#user_overview_container {
+#user-overview-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,13 +8,13 @@
   height: 100%;
 }
 
-#users_overview_user_name,
-#users_overview_payments {
+#users-overview-user-name,
+#users-overview-payments {
   width: 100%;
 }
 
 
-.users_overview_payment {
+.users-overview-payment {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,12 +22,12 @@
 
 }
 
-.users_overview_payment_description {
+.users-overview-payment-description {
   margin-left: 10px;
   text-align: left;
 }
 
-.users_overview_payment_amount {
+.users-overview-payment-amount {
   margin-right: 10px;
   text-align: right;
 }

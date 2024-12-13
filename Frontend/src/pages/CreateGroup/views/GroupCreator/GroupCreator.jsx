@@ -5,11 +5,19 @@ import {useEffect, useState} from "react";
 import "./GroupCreator.scss";
 import {isValidPaypalMeUrl} from "../../../../shared/validator.js";
 
-const GroupCreator = ({onCreatorSet, onBackClick}) => {
+/**
+ * View for adding the information of the group creator.
+ *
+ * @returns {JSX.Element} - The GroupCreator component.
+ */
+export default function GroupCreator({onCreatorSet, onBackClick}) {
     const [groupCreator, setGroupCreator] = useState({name: "", paypal: ""});
     const [isValidName, setIsValidName] = useState(false);
     const [isValidPaypal, setIsValidPaypal] = useState(false);
 
+    /**
+     * Handler for the name input field.
+     */
     const handleNameInputChange = (event) => {
         setGroupCreator({
             name: event.target.value,
@@ -17,6 +25,9 @@ const GroupCreator = ({onCreatorSet, onBackClick}) => {
         });
     };
 
+    /**
+     * Handler for the PayPal input field.
+     */
     const handlePayPalInputChange = (event) => {
         setGroupCreator({
             name: groupCreator.name,
@@ -24,18 +35,21 @@ const GroupCreator = ({onCreatorSet, onBackClick}) => {
         });
     };
 
+    /**
+     * Checks if the input fields are valid.
+     */
     useEffect(() => {
         setIsValidName(groupCreator.name.length >= 1 && groupCreator.name.length <= 30);
         setIsValidPaypal(groupCreator.paypal === "" || isValidPaypalMeUrl(groupCreator.paypal));
     }, [groupCreator]);
 
     return (
-        <div id="group_creator_container" className="default_page_container">
+        <div id="group-creator-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text">
+            <div className="headline-text">
                 Wer bist du?
             </div>
-            <div id="box_group_creator">
+            <div id="box-group-creator">
                 <TextField
                     fullWidth
                     value={groupCreator.name}
@@ -67,4 +81,3 @@ const GroupCreator = ({onCreatorSet, onBackClick}) => {
         </div>
     );
 };
-export default GroupCreator;

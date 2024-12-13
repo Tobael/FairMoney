@@ -17,7 +17,7 @@ $font-color: #FFFFFF;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.headline_text {
+.headline-text {
   margin-top: min(40%, 200px);
   margin-bottom: min(15%, 30px);
   text-align: center;
@@ -26,15 +26,15 @@ $font-color: #FFFFFF;
   width: 70%;
 }
 
-.headline_less_space {
+.headline-less-space {
   margin-top: 80px;
 }
 
-.headline_no_space {
+.headline-no-space {
   margin-top: 0;
 }
 
-.sub_headline_text {
+.sub-headline-text {
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
@@ -42,8 +42,8 @@ $font-color: #FFFFFF;
   font-size: large;
 }
 
-.default_page_container,
-.landing_page_container {
+.default-page-container,
+.landing-page-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -55,10 +55,10 @@ $font-color: #FFFFFF;
   align-items: center;
 }
 
-.default_page_container {
+.default-page-container {
   background-color: $secondary-color;
 }
 
-.landing_page_container {
+.landing-page-container {
   background-color: $primary-color;
 }

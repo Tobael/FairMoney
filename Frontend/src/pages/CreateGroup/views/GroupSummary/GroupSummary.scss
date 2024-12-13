@@ -1,6 +1,6 @@
 @use '../../../../index' as *;
 
-#url_text {
+#url-text {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -8,15 +8,15 @@
   margin-bottom: 30px;
 }
 
-#btn_copy_join_msg {
+#btn-copy-join-msg {
   margin-bottom: 30px;
 }
 
-#btn_join_group {
+#btn-join-group {
   margin-top: 30px;
 }
 
-#box_group_member_summary {
+#box-group-member-summary {
   display: flex;
   justify-content: center;
   width: 70%;
@@ -24,11 +24,11 @@
   overflow-y: auto;
 }
 
-#btn_join_group {
+#btn-join-group {
   margin-bottom: 20px;
 }
 
-#copy_icon {
+#copy-icon {
   margin-right: 10px;
   color: $font-color;
   border-radius: 50%;

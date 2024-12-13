@@ -4,27 +4,39 @@ import TextField from "@mui/material/TextField";
 import {useEffect, useState} from "react";
 import Header from "../../../../components/Header/Header.jsx";
 
-const GroupTitle = ({onNameSet, onBackClick}) => {
+
+/**
+ * View for adding the title of the group.
+ *
+ * @returns {JSX.Element} - The GroupTitle component.
+ */
+export default function GroupTitle({onNameSet, onBackClick}) {
     const [groupTitle, setGroupTitle] = useState("");
     const [isValidGroupTitle, setValidIsGroupTitle] = useState(false);
 
+    /**
+     * Handler for the title input field.
+     */
     const handleInputChange = (event) => {
         setGroupTitle(event.target.value);
     };
 
+    /**
+     * Checks if the input fields are valid.
+     */
     useEffect(() => {
         setValidIsGroupTitle(groupTitle.length >= 3 && groupTitle.length <= 30);
     }, [groupTitle]);
 
     return (
-        <div id="group_title_container" className="default_page_container">
+        <div id="group-title-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text">
+            <div className="headline-text">
                 Wie möchtest du deine Gruppe nennen?
             </div>
 
             <TextField
-                id="tf_question"
+                id="tf-question"
                 fullWidth
                 value={groupTitle}
                 onChange={handleInputChange}
@@ -34,7 +46,7 @@ const GroupTitle = ({onNameSet, onBackClick}) => {
                 InputLabelProps={{shrink: true}}
             />
             <Button
-                id="btn_name_set"
+                id="btn-name-set"
                 variant="default"
                 disabled={!isValidGroupTitle}
                 onClick={() => onNameSet(groupTitle)}
@@ -44,4 +56,3 @@ const GroupTitle = ({onNameSet, onBackClick}) => {
         </div>
     );
 };
-export default GroupTitle;

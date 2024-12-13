@@ -1,6 +1,6 @@
 @use "../../../../index" as *;
 
-#overview_button_container {
+#overview-button-container {
   display: flex;
   flex-direction: row;
   gap: 25px;
@@ -10,23 +10,23 @@
   margin-bottom: 20px;
 }
 
-#overview_button_container_left {
+#overview-button-container-left {
   display: flex;
   flex-direction: column;
   gap: 20px;
   justify-content: center;
 }
 
-#overview_button_container_right {
+#overview-button-container-right {
   align-content: center;
 }
 
-#btn_goto_accounting,
-#btn_goto_history {
+#btn-goto-accounting,
+#btn-goto-history {
   width: 100%;
 }
 
-#group_overview_user_container {
+#group-overview-user-container {
   display: flex;
   flex-direction: column;
   overflow-y: auto;

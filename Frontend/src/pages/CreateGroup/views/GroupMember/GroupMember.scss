@@ -1,11 +1,11 @@
 @use '../../../../index' as *;
 
 
-#accounting_preview_container {
+#accounting-preview-container {
   margin-top: 20px;
 }
 
-#box_group_member {
+#box-group-member {
   width: 100%;
   height: 100%;
 
@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-#box_group_member_list {
+#box-group-member-list {
   display: flex;
   justify-content: center;
   width: 70%;
@@ -22,16 +22,16 @@
   overflow-y: auto;
 }
 
-#btn_create_group {
+#btn-create-group {
   margin-top: 20px;
 }
 
-#margin_between_fields {
+#margin-between-fields {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-#btn_add_member {
+#btn-add-member {
   margin-top: 30px;
   margin-bottom: 20px;
 }

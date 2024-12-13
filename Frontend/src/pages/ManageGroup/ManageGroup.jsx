@@ -11,18 +11,34 @@ import GroupAccountingOverview from "./views/GroupAccountingOverview/GroupAccoun
 import {ManageGroupViews} from "../../shared/enums.js";
 import {showErrorPage} from "../../shared/error.js";
 
+
+/**
+ * Loader function to get the group ID from the route parameters.
+ *
+ * @param {Object} params - The route parameters.
+ * @returns {string} - The group ID.
+ */
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({params}) {
     return params.groupId;
 }
 
+/**
+ * Page to manage a group
+ *
+ * @returns {JSX.Element} - The ManageGroup component.
+ */
 export default function ManageGroup() {
     const [show, setCurrentView] = React.useState(0);
     const [group, setGroup] = React.useState(null)
     const [login, setLogin] = React.useState(null);
 
+    // Read the group ID from the loader
     const groupId = useLoaderData();
 
+    /**
+     * Fetches the group details and sets the group state.
+     */
     const getGroup = useCallback(async () => {
         const result = await fetchGroup(groupId)
         if (result.ok) {
@@ -34,6 +50,9 @@ export default function ManageGroup() {
         }
     }, [groupId]);
 
+    /**
+     * Fetches the group on load and sets the tab title to include the group name.
+     */
     useEffect(() => {
         getGroup().then((group) => {
             setCurrentView(ManageGroupViews.GroupLogin)
@@ -41,7 +60,9 @@ export default function ManageGroup() {
         })
     }, [getGroup]);
 
-
+    /**
+     * Resets the view to the login screen when the arrow back is clicked.
+     */
     useEffect(() => {
         if (login === null && group !== null) {
             setCurrentView(ManageGroupViews.GroupLogin)
@@ -49,7 +70,7 @@ export default function ManageGroup() {
     }, [login, group]);
 
     return (
-        <div id="create_group_wrapper">
+        <div id="create-group-wrapper">
             {show === ManageGroupViews.GroupLogin && (
                 <GroupLogin
                     group={group}

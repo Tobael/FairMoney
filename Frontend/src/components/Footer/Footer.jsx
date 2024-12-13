@@ -1,9 +1,14 @@
 import "./Footer.scss";
 
-const Footer = () => {
+/**
+ * Component for the footer
+ *
+ * @returns {JSX.Element} - The Footer component.
+ */
+export default function Footer() {
     return (
         <div id="footer">FairMoney</div>
     );
 };
 
-export default Footer;
+

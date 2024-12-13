@@ -1,7 +1,7 @@
 @use '../../../../index' as *;
 
 
-#user_button_list {
+#user-button-list {
   width: 70%;
   height: 100%;
   overflow-y: auto;
@@ -14,7 +14,7 @@
   margin-bottom: 20px;
 }
 
-.user_button {
+.user-button {
   width: 100% !important;
   height: 50px;
   border: none;

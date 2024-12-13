@@ -9,7 +9,13 @@ import {CreateGroupViews} from "../../shared/enums.js";
 import {createGroup as createGroupBackend} from "../../shared/backend.js";
 import {showErrorPage} from "../../shared/error.js";
 
-const CreateGroupView = () => {
+
+/**
+ * Page to create a group
+ *
+ * @returns {JSX.Element} - The CreateGroupView component.
+ */
+export default function CreateGroupView() {
     const [show, setCurrentView] = React.useState(CreateGroupViews.LandingPage);
     const [group, setGroup] = React.useState({
         title: null,
@@ -18,7 +24,9 @@ const CreateGroupView = () => {
     });
     const [groupId, setGroupId] = React.useState("");
 
-
+    /**
+     * Resets the group creation process, when user clicks the back arrow.
+     */
     const resetGroupCreation = () => {
         setGroup({
             title: null,
@@ -29,6 +37,9 @@ const CreateGroupView = () => {
         setCurrentView(CreateGroupViews.LandingPage);
     }
 
+    /**
+     * Calls the backend to create a group when all necessary information is provided.
+     */
     useEffect(() => {
         const createGroup = async () => {
             const result = await createGroupBackend(group)
@@ -48,7 +59,7 @@ const CreateGroupView = () => {
     }, [group]);
 
     return (
-        <div id="create_group_wrapper">
+        <div id="create-group-wrapper">
             {show === CreateGroupViews.LandingPage && (
                 <LandingPage
                     onNewGroup={() => {
@@ -103,4 +114,4 @@ const CreateGroupView = () => {
     );
 };
 
-export default CreateGroupView;
+

@@ -5,21 +5,34 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Footer from "../../../../components/Footer/Footer.jsx";
 
-const LandingPage = ({onNewGroup}) => {
+
+/**
+ * View for the landing page of the app.
+ *
+ * @returns {JSX.Element} - The LandingPage component.
+ */export default function LandingPage({onNewGroup}) {
     const [groupCode, setGroupCode] = useState("");
     const [isValidGroupCode, setIsValidGroupCode] = useState(false);
 
     const navigate = useNavigate();
 
+    /**
+     * Handler for the UUID input field.
+     */
     const handleInputChange = (event) => {
         setGroupCode(event.target.value);
     };
 
+    /**
+     * Redirects to the group page.
+     */
     const redirectToGroup = () => {
         navigate(`/${groupCode}`);
     };
 
-
+    /**
+     * Checks if the input fields are valid.
+     */
     useEffect(() => {
         const uuid4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
         setIsValidGroupCode(!uuid4Regex.test(groupCode))
@@ -27,13 +40,13 @@ const LandingPage = ({onNewGroup}) => {
 
 
     return (
-        <div id="landing_page_container" className="landing_page_container">
-            <div className="headline_text">
+        <div id="landing-page-container" className="landing-page-container">
+            <div className="headline-text">
                 Hallo, möchtest du Geld fair teilen?
             </div>
 
             <TextField
-                id="tf_question"
+                id="tf-question"
                 fullWidth
                 label="Hast du einen Gruppencode?"
                 value={groupCode}
@@ -42,7 +55,7 @@ const LandingPage = ({onNewGroup}) => {
                 InputLabelProps={{shrink: true}}
             />
             <Button
-                id="btn_lp_join_group"
+                id="btn-lp-join-group"
                 variant="landing"
                 disabled={isValidGroupCode}
                 onClick={redirectToGroup}
@@ -50,7 +63,7 @@ const LandingPage = ({onNewGroup}) => {
                 Gruppe beitreten
             </Button>
             <Button
-                id="btn_lp_create_group"
+                id="btn-lp-create-group"
                 className="MuiButton-landing"
                 variant="landing"
                 onClick={() => onNewGroup()}
@@ -62,4 +75,3 @@ const LandingPage = ({onNewGroup}) => {
     );
 };
 
-export default LandingPage;

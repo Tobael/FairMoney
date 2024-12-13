@@ -2,18 +2,19 @@ import "./AccountingItem.scss";
 import {getAmountAsString} from "../../shared/formatter.js";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const AccountingItem = ({transaction}) => {
-
+/**
+ * Component to display a single accounting transaction.
+ *
+ * @returns {JSX.Element} - The AccountingItem component.
+ */
+export default function AccountingItem({transaction}) {
     return (
-        <div className="accounting_item_container">
-            <div className="accounting_item_payment_from">{transaction.payment_from}</div>
-            <div className="accounting_item_arrow"><ArrowForwardIcon/></div>
-            <div className="accounting_item_payment_to">{transaction.payment_to}</div>
-            <div className="accounting_item_amount">{getAmountAsString(transaction.amount)}</div>
+        <div className="accounting-item-container">
+            <div className="accounting-item-payment-from">{transaction.payment_from}</div>
+            <div className="accounting-item-arrow"><ArrowForwardIcon/></div>
+            <div className="accounting-item-payment-to">{transaction.payment_to}</div>
+            <div className="accounting-item-amount">{getAmountAsString(transaction.amount)}</div>
         </div>
     );
 };
-
-export default AccountingItem;
-
 

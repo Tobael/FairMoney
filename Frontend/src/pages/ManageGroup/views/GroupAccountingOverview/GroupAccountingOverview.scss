@@ -1,17 +1,17 @@
 
-#group_acconting_overview_inner_container {
+#group-acconting-overview-inner-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#btn_copy_accounting_msg,
-#btn_close_grp {
+#btn-copy-accounting-msg,
+#btn-close-grp {
   margin-top: 20px;
 }
 
-#accounting_entries_container {
+#accounting-entries-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,10 +22,10 @@
   overflow-y: auto;
 }
 
-#btn_copy_accounting_msg {
+#btn-copy-accounting-msg {
   margin-bottom: 50px;
 }
 
-#btn_close_grp {
+#btn-close-grp {
   margin-bottom: 20px;
 }

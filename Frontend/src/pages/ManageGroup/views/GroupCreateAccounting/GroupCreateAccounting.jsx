@@ -7,11 +7,18 @@ import {fetchAccountingPreview} from "../../../../shared/backend.js";
 import AccountingItem from "../../../../components/AccoutingItem/AccountingItem.jsx";
 import {showErrorPage} from "../../../../shared/error.js";
 
+/**
+ * View for preview accounting transactions and creating an accounting for a group.
+ *
+ * @returns {JSX.Element} - The GroupCreateAccounting component.
+ */
 export default function GroupCreateAccounting({onBackClick, onCreateAccounting, login, groupId}) {
     const [accountingPreview, setAccountingPreview] = React.useState(null)
     const [showPreview, setShowPreview] = React.useState(false)
 
-
+    /**
+     * Fetches the accounting preview and mounts the transactions after completion.
+     */
     useEffect(() => {
         const getAccountingPreview = async () => {
             const result = await fetchAccountingPreview(groupId)
@@ -28,18 +35,18 @@ export default function GroupCreateAccounting({onBackClick, onCreateAccounting, 
 
 
     return (
-        <div id="group_create_accounting_container" className="default_page_container">
+        <div id="group-create-accounting-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text headline_less_space">Hallo {login}, möchtest du die Gruppe abrechnen?</div>
-            <div className="headline_text headline_no_space">Dies kann nicht rückgängig gemacht werden!</div>
+            <div className="headline-text headline-less-space">Hallo {login}, möchtest du die Gruppe abrechnen?</div>
+            <div className="headline-text headline-no-space">Dies kann nicht rückgängig gemacht werden!</div>
             <Button
-                id="btn_create_accounting"
+                id="btn-create-accounting"
                 variant="default"
                 onClick={() => onCreateAccounting()}>
                 Ja ich bin mir sicher!
             </Button>
             <Button
-                id="btn_cancel_accounting"
+                id="btn-cancel-accounting"
                 variant="default"
                 onClick={() => onBackClick()}>
                 Nein lieber noch nicht
@@ -47,10 +54,10 @@ export default function GroupCreateAccounting({onBackClick, onCreateAccounting, 
 
             {showPreview && (
                 <>
-                    <div className="headline_text headline_less_space" id="create_account_preview_headline">
+                    <div className="headline-text headline-less-space" id="create-account-preview-headline">
                         Du möchtest nur eine Vorschau?
                     </div>
-                    <div id="accounting_preview_entries_container">
+                    <div id="accounting-preview-entries-container">
                         {accountingPreview.map((transaction) => (
                             <AccountingItem key={transaction.id} transaction={transaction}/>
                         ))}

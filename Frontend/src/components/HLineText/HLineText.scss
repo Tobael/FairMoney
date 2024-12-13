@@ -1,6 +1,6 @@
 @use '../../index' as *;
 
-.hline_text {
+.hline-text {
   display: flex;
   align-items: center;
   text-align: center;
@@ -8,21 +8,21 @@
   white-space: nowrap;
 }
 
-.hline_text::before,
-.hline_text::after {
+.hline-text::before,
+.hline-text::after {
   content: '';
   flex: 1;
   border-bottom: 1px solid $font-color;
 }
 
-.hline_text:not(:empty)::before {
+.hline-text:not(:empty)::before {
   margin-right: .5em;
 }
 
-.hline_text:not(:empty)::after {
+.hline-text:not(:empty)::after {
   margin-left: .5em;
 }
 
-.hline_small_text {
+.hline-small-text {
   font-size: .6em;
 }

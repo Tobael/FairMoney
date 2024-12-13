@@ -6,7 +6,12 @@ import Header from "../../../../components/Header/Header.jsx";
 import UserList from "../../../../components/UserList/UserList.jsx";
 import {isValidPaypalMeUrl} from "../../../../shared/validator.js";
 
-const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
+/**
+ * View for adding the information for additional group members.
+ *
+ * @returns {JSX.Element} - The GroupMember component.
+ */
+export default function GroupMember({creator, onMembersAdded, onBackClick}) {
     const [groupMembers, setGroupMembers] = useState([]);
     const [groupMember, setGroupMember] = useState({name: "", paypal: ""});
     const [createActive, setCreateActive] = useState(false);
@@ -14,6 +19,9 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
     const [isUniqueName, setIsUniqueName] = useState(false);
     const [isValidPaypal, setIsValidPaypal] = useState(false);
 
+    /**
+     * Handler for the name input field.
+     */
     const handleNameInputChange = (event) => {
         setGroupMember({
             name: event.target.value,
@@ -21,6 +29,9 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
         });
     };
 
+    /**
+     * Handler for the PayPal input field.
+     */
     const handlePayPalInputChange = (event) => {
         setGroupMember({
             name: groupMember.name,
@@ -28,43 +39,49 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
         });
     };
 
+    /**
+     * Adds the member to the group. Activates the create button, since has at least two members (including creator).
+     */
     const onMemberAdded = () => {
         setGroupMembers([...groupMembers, groupMember]);
         setGroupMember({name: "", paypal: ""});
         setCreateActive(true);
     };
 
+    /**
+     * Checks if the input fields are valid.
+     */
     useEffect(() => {
-        setIsValidName(groupMember.name.length >= 1 && groupMember.name.length <= 30);
+
         setIsUniqueName(!(groupMembers.some((member) => member.name === groupMember.name) || creator.name === groupMember.name));
         setIsValidPaypal(groupMember.paypal === "" || isValidPaypalMeUrl(groupMember.paypal));
     }, [groupMembers, groupMember, creator.name]);
 
     return (
-        <div id="group_member_container" className="default_page_container">
+        <div id="group-member-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text headline_less_space">
+            <div className="headline-text headline-less-space">
                 Mit wem möchtest du Geld fair teilen?
             </div>
-            <div id="box_group_member_list">
+            <div id="box-group-member-list">
                 <UserList
                     creator={creator}
                     users={groupMembers}/>
             </div>
             <Button
-                id="btn_create_group"
+                id="btn-create-group"
                 variant="default"
                 disabled={!createActive}
                 onClick={() => onMembersAdded(groupMembers)}
             >
                 Gruppe erstellen
             </Button>
-            <div className="sub_headline_text">
+            <div className="sub-headline-text">
                 Weitere Person hinzufügen?
             </div>
             <TextField
                 fullWidth
-                id="group_member_name"
+                id="group-member-name"
                 value={groupMember.name}
                 label="Wie ist der Name der Person?"
                 onChange={handleNameInputChange}
@@ -73,10 +90,10 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
                 variant="standard"
                 InputLabelProps={{shrink: true}}
             />
-            <div id="margin_between_fields"/>
+            <div id="margin-between-fields"/>
             <TextField
                 fullWidth
-                id="group_member_paypal"
+                id="group-member-paypal"
                 value={groupMember.paypal}
                 label="Hat sie einen PayPal.me Link (optional)?"
                 onChange={handlePayPalInputChange}
@@ -86,7 +103,7 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
                 InputLabelProps={{shrink: true}}
             />
             <Button
-                id="btn_add_member"
+                id="btn-add-member"
                 variant="default"
                 onClick={() => onMemberAdded()}
                 disabled={!isValidName || !isValidPaypal || !isUniqueName}
@@ -97,4 +114,3 @@ const GroupMember = ({creator, onMembersAdded, onBackClick}) => {
 
     );
 };
-export default GroupMember;

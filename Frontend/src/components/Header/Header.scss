@@ -1,6 +1,6 @@
 @use '../../index' as *;
 
-#header_container {
+#header-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-#header_back_click {
+#header-back-click {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -24,7 +24,7 @@
   cursor: pointer;
 }
 
-#header_text {
+#header-text {
   text-align: center;
   font-weight: bolder;
   font-size: xx-large;

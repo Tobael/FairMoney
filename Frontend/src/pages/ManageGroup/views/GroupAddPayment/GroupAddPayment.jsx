@@ -11,7 +11,11 @@ import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import {showErrorPage} from "../../../../shared/error.js";
 
-
+/**
+ * View for adding a payment to a group.
+ *
+ * @returns {JSX.Element} - The GroupAddPayment component.
+ */
 export default function GroupAddPayment({onBackClick, onPaymentAdded, group, login}) {
     const [payment, setPayment] = useState({
         description: "",
@@ -25,6 +29,9 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
 
     const [amountChanged, setAmountChanged] = useState(false);
 
+    /**
+     * Calls the backend to add a payment to the group.
+     */
     const addPayment = async (payment) => {
         const result = await createPayment(group.uuid, payment, login)
         if (!result.ok) {
@@ -32,6 +39,9 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         }
     }
 
+    /**
+     * Handler for the description input field.
+     */
     const handleDescriptionInputChange = (description) => {
         setPayment((prevPayment) => ({
             ...prevPayment,
@@ -40,6 +50,9 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         setIsValidDescription(description.target.value.length >= 3 && description.target.value.length <= 30)
     };
 
+    /**
+     * Handler for the amount input field.
+     */
     const handleAmountInputChange = (amount) => {
         setPayment((prevPayment) => ({
             ...prevPayment,
@@ -49,6 +62,9 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         setAmountChanged(true)
     };
 
+    /**
+     * Handler for the paid by selection field.
+     */
     const handlePaidByInputChange = (paid_by) => {
         setPayment((prevPayment) => ({
             ...prevPayment,
@@ -56,6 +72,9 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         }));
     };
 
+    /**
+     * Handler for the participants selection field.
+     */
     const handleParticipantsSelectionChange = (participants) => {
         const selectedParticipants = participants.target.value;
         setPayment((prevPayment) => ({
@@ -66,6 +85,9 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
         setIsValidParticipantsList(selectedParticipants.length > 0);
     };
 
+    /**
+     * Creates the display text for the multi select field.
+     */
     const createMultiSelectText = (selectedParticipants) => {
         if (selectedParticipants.length === group.users.length) {
             return "Alle";
@@ -76,14 +98,14 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
     }
 
     return (
-        <div id="group_add_payment_container" className="default_page_container">
+        <div id="group-add-payment-container" className="default-page-container">
             <Header onBackClick={() => onBackClick()}/>
-            <div className="headline_text headline_less_space">
+            <div className="headline-text headline-less-space">
                 Hallo {login}, welche Ausgabe möchtest du hinzufügen?
             </div>
-            <div id="payment_inputs_container">
+            <div id="payment-inputs-container">
                 <TextField
-                    id="tf_payment_description"
+                    id="tf-payment-description"
                     fullWidth
                     value={payment.description}
                     label="Was wurde gezahlt?"
@@ -95,7 +117,7 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
                 />
 
                 <TextField
-                    id="tf_payment_amount"
+                    id="tf-payment-amount"
                     type="number"
                     min="0"
                     step="any"
@@ -128,10 +150,10 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
                     ))}
                 </TextField>
 
-                <div id="multi_select_container">
-                    <InputLabel variant="standard" htmlFor="multi_select_participants">Wer war beteiligt?</InputLabel>
+                <div id="multi-select-container">
+                    <InputLabel variant="standard" htmlFor="multi-select-participants">Wer war beteiligt?</InputLabel>
                     <Select
-                        id="multi_select_participants"
+                        id="multi-select-participants"
                         fullWidth={true}
                         multiple
                         label="Wer war beteiligt?"
@@ -149,7 +171,7 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
                 </div>
 
                 <Button
-                    id="btn_add_payment"
+                    id="btn-add-payment"
                     variant="default"
                     disabled={!isValidDescription || !isValidAmount || !isValidParticipantsList || !amountChanged}
                     onClick={async () => {

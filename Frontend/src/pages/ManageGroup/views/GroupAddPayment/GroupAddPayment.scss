@@ -1,4 +1,4 @@
-#payment_inputs_container {
+#payment-inputs-container {
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -12,11 +12,11 @@
   width: 100%;
 }
 
-#participants_selection {
+#participants-selection {
   width: 100%;
 }
 
-#multi_select_container {
+#multi-select-container {
   width: 70%;
   max-width: 500px;
 }
