@@ -94,6 +94,10 @@ class AccountingHandler:
         saldo_dict: dict[User, float] = {}
 
         for payment in group.payments:
+            # Ignore already balanced payments
+            if payment.balanced_by is not None:
+                continue
+
             if payment.paid_by not in saldo_dict:
                 saldo_dict[payment.paid_by] = 0.0
             saldo_dict[payment.paid_by] += payment.amount
