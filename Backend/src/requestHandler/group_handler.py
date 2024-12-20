@@ -1,4 +1,5 @@
 import functools
+import re
 from datetime import datetime
 from typing import Annotated
 
@@ -15,6 +16,32 @@ from models.responseModels.group_response_model import (GroupResponseModel,
                                                         TransactionResponseModel)
 from models.user import User
 from shared.db_query_service import DatabaseServiceDep
+
+
+def check_and_unify_paypal_me_link(paypal_me_link: str) -> str:
+    """
+    Validates and unifies a PayPal.me link.
+
+    Args:
+        paypal_me_link (str): The PayPal.me link to validate and unify.
+
+    Returns:
+        str: The unified PayPal.me link.
+
+    Raises:
+        HTTPException: If the PayPal.me link is invalid.
+    """
+    if paypal_me_link == "":
+        return ""
+
+    pattern = re.compile("^(https://)?paypal\.me/[^/]+$")
+
+    if not pattern.match(paypal_me_link):
+        raise HTTPException(status_code=400, detail="Invalid paypal me link.")
+
+    if not paypal_me_link.startswith("https://"):
+        return "https://" + paypal_me_link
+    return paypal_me_link
 
 
 def convert_group_to_response_model(group: Group) -> GroupResponseModel:
@@ -79,18 +106,18 @@ class GroupHandler:
         if len(user_names) != len(set(user_names)):
             raise HTTPException(status_code=400, detail="User names must be unique.")
 
-        user = [User(name=user_request.name,
-                     paypal_me_link=user_request.paypal_me) for user_request in request_model.users]
+        users = [User(name=user_request.name,
+                      paypal_me_link=check_and_unify_paypal_me_link(user_request.paypal_me))
+                 for user_request in request_model.users]
 
-        created_by_user = next((user for user in user if user.name == user_name), None)
+        created_by_user = next((user for user in users if user.name == user_name), None)
         if created_by_user is None:
             raise HTTPException(status_code=400, detail="Creator must be part of the group.")
 
         group = Group(
             title=request_model.title,
             closed=False,
-            users=[User(name=user_request.name,
-                        paypal_me_link=user_request.paypal_me) for user_request in request_model.users],
+            users=users,
             payments=[],
             accountings=[],
             created_at=datetime.now(),
