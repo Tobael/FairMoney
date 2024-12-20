@@ -52,7 +52,7 @@ export default function GroupMember({creator, onMembersAdded, onBackClick}) {
      * Checks if the input fields are valid.
      */
     useEffect(() => {
-
+        setIsValidName(groupMember.name.length >= 1 && groupMember.name.length <= 30);
         setIsUniqueName(!(groupMembers.some((member) => member.name === groupMember.name) || creator.name === groupMember.name));
         setIsValidPaypal(groupMember.paypal === "" || isValidPaypalMeUrl(groupMember.paypal));
     }, [groupMembers, groupMember, creator.name]);
@@ -86,7 +86,7 @@ export default function GroupMember({creator, onMembersAdded, onBackClick}) {
                 label="Wie ist der Name der Person?"
                 onChange={handleNameInputChange}
                 error={!isValidName && groupMember.name !== ""}
-                helperText={isValidName || groupMember.name === "" ? (isUniqueName ? "" : "Der Name ist bereits vergeben!") : "Bitte maximal 30 Zeichen ein!"}
+                helperText={isValidName || groupMember.name === "" ? (isUniqueName ? "" : "Der Name ist bereits vergeben!") : "Bitte gib maximal 30 Zeichen ein!"}
                 variant="standard"
                 InputLabelProps={{shrink: true}}
             />

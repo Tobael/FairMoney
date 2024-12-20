@@ -35,7 +35,7 @@ export default function GroupAddPayment({onBackClick, onPaymentAdded, group, log
     const addPayment = async (payment) => {
         const result = await createPayment(group.uuid, payment, login)
         if (!result.ok) {
-            showErrorPage(result)
+            showErrorPage(result.toString())
         }
     }
 

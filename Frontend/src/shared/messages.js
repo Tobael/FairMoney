@@ -28,7 +28,7 @@ export const getGroupAccountingMessage = (transactions, group) => {
     console.log(transactions);
     console.log(group);
     const msg_transactions = transactions.reduce((acc, curr) => {
-        return acc + `${curr.payment_from} schickt ${curr.payment_to} ${getAmountAsString(curr.amount)}${getPaypalMessage(curr.payment_to, group)}.\n`;
+        return acc + `${curr.payment_from} schickt ${curr.payment_to} ${getAmountAsString(curr.amount)}${getPaypalMessage(curr.payment_to, group, curr.amount)}.\n`;
     }, "");
 
     return msg_prefix + msg_transactions + "\n" + msg_suffix
@@ -42,11 +42,12 @@ export const getGroupAccountingMessage = (transactions, group) => {
  * @param {Array} group.users - The list of users in the group.
  * @param {string} group.users[].user_name - The username of a user in the group.
  * @param {string} group.users[].paypal_me - The PayPal.Me link of a user in the group.
+ * @param {number} amount - The Amount of money to be paid.
  * @returns {string} - The PayPal.Me message or an empty string if not available.
  */
-const getPaypalMessage = (user, group) => {
+const getPaypalMessage = (user, group, amount) => {
     const paypal_me = group.users.filter(u => u.user_name === user)[0].paypal_me;
-    return paypal_me && paypal_me !== "" ? ` Dafür kannst du gerne den folgenden Link nutzen: ${paypal_me}` : "";
+    return paypal_me && paypal_me !== "" ? ` Dafür kannst du gerne den folgenden Link nutzen: ${paypal_me}/${Math.abs(amount)}` : "";
 }
 
 /**

@@ -26,7 +26,7 @@ export default function GroupCreateAccounting({onBackClick, onCreateAccounting, 
                 const data = await result.json()
                 setAccountingPreview(data);
             } else {
-                showErrorPage(result)
+                showErrorPage(result.toString())
             }
         }
 

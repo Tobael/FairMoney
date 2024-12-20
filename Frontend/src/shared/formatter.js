@@ -6,5 +6,5 @@
  *                     a comma as the decimal separator, and a euro symbol.
  */
 export const getAmountAsString = (amount) => {
-    return `${amount.toFixed(2).replace('.', ',')} €`
+    return `${Math.abs(amount).toFixed(2).replace('.', ',')} €`
 }

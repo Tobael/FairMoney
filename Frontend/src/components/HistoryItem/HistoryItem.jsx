@@ -52,7 +52,7 @@ export default function HistoryItem({group, item}) {
             )}
             {item.type.toString() === "PAYMENT" && (
                 <div className="history-item-text">
-                    {item.creator} hat {getAmountAsString(item.details.amount)} ausgegeben.
+                    {item.details.paid_by} hat {getAmountAsString(item.details.amount)} ausgegeben.
                 </div>
             )}
             {item.type.toString() === "ACCOUTING" && (
@@ -62,7 +62,7 @@ export default function HistoryItem({group, item}) {
             )}
             {item.type.toString() === "CLOSED" && (
                 <div className="history-item-text">
-                    {item.creator} hat die Gruppe geschlossen.
+                    Gruppe wurde geschlossen.
                 </div>
             )}
             {(item.type.toString() === "PAYMENT" || item.type.toString() === "ACCOUTING") && (

@@ -5,5 +5,5 @@
  * @returns {boolean} - Returns true if the URL is a valid PayPal.Me URL, otherwise false.
  */
 export const isValidPaypalMeUrl = (url) => {
-    return /^((?:https):\/\/)?paypal\.me\/.+/gm.test(url);
+    return /^(https:\/\/)?paypal\.me\/[^/]+$/gm.test(url);
 }

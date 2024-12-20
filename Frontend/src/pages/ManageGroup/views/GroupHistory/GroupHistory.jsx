@@ -21,7 +21,7 @@ export default function GroupHistory({onBackClick, group, login}) {
                 const data = await result.json()
                 setHistory(data);
             } else {
-                showErrorPage(result)
+                showErrorPage(result.toString())
             }
         }
 

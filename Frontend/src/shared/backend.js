@@ -170,9 +170,9 @@ export const createAccounting = async (uuid, user_name) => {
  */
 const fetchApi = async (url, requestOptions) => {
     try {
-        return await fetch(`${BACKEND_URL}/${url}`, requestOptions);
+        return await fetch(`${getBackendUrl()}/${url}`, requestOptions);
     } catch (error) {
-        showErrorPage(error);
+        showErrorPage(error.toString());
         throw error;
     }
 };
@@ -193,5 +193,13 @@ const get_headers = (user_name) => {
     return headers;
 };
 
-/** The base URL for the backend API. */
-const BACKEND_URL = "http://localhost:8003";
+/**
+ * Returns the backend URL based on the current frontend hostname.
+ *
+ * @returns {string} - The backend URL.
+ */
+const getBackendUrl = () => {
+    return window.location.hostname === "localhost" ?
+        "http://localhost:8003" :
+        "http://192.168.178.30:8003"
+}

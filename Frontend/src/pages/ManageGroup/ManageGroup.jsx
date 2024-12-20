@@ -46,7 +46,7 @@ export default function ManageGroup() {
             setGroup(data);
             return data
         } else {
-            showErrorPage(result)
+            showErrorPage(result.toString())
         }
     }, [groupId]);
 

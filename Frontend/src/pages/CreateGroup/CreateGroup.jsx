@@ -47,7 +47,7 @@ export default function CreateGroupView() {
                 const data = await result.json();
                 setGroupId(data.uuid);
             } else {
-                showErrorPage(result)
+                showErrorPage(result.toString())
             }
         }
 

@@ -3,7 +3,7 @@ import {createRoot} from "react-dom/client";
 import "./index.scss";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import CreateGroupView from "./pages/CreateGroup/CreateGroup.jsx";
-import ManageGroup, {loader as manageGroupLoader,} from "./pages/ManageGroup/ManageGroup.jsx";
+import ManageGroup, {loader as manageGroupLoader} from "./pages/ManageGroup/ManageGroup.jsx";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
