@@ -29,6 +29,8 @@ Easily share your expenses with your friends, colleagues or any other group of y
 - Ensure that Docker is installed by executing `docker --version` in your shell.
 - If Docker is installed, run `docker compose up`.
 - The command will build the application, create Docker images and run the containers.
+- The access to Backend or Frontend, check the port configuration in `./docker-compose.yml` 
+  - (defaults to Backend 8003 and Frontend 8002)
 
 
 ### Frontend
