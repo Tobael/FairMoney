@@ -1,11 +1,6 @@
 from pydantic import BaseModel
 
-
-class UserRequestModel(BaseModel):
-    """User request model."""
-
-    name: str
-    paypal_me: str = ""
+from models.requestModels.user_request_model import UserRequestModel
 
 
 class GroupCreateRequestModel(BaseModel):

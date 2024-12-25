@@ -34,7 +34,7 @@ def check_and_unify_paypal_me_link(paypal_me_link: str) -> str:
     if paypal_me_link == "":
         return ""
 
-    pattern = re.compile("^(https://)?paypal\.me/[^/]+$")
+    pattern = re.compile("^(https://)?paypal.me/[^/]+$")
 
     if not pattern.match(paypal_me_link):
         raise HTTPException(status_code=400, detail="Invalid paypal me link.")
@@ -105,6 +105,9 @@ class GroupHandler:
 
         if len(user_names) != len(set(user_names)):
             raise HTTPException(status_code=400, detail="User names must be unique.")
+
+        if len(request_model.users) > 20:
+            raise HTTPException(status_code=400, detail="Maximum number of users is 20.")
 
         users = [User(name=user_request.name,
                       paypal_me_link=check_and_unify_paypal_me_link(user_request.paypal_me))

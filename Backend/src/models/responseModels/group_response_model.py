@@ -3,16 +3,9 @@ from datetime import datetime
 from pydantic import BaseModel
 
 from models.enumerations.event_types import EventType
-from models.responseModels.acounts_response_model import TransactionResponseModel
-
-
-class PaymentDetailResponseModel(BaseModel):
-    """Payment detail response model."""
-
-    amount: float
-    description: str
-    paid_by: str
-    participants: list[str]
+from models.responseModels.payment_response_model import PaymentDetailResponseModel
+from models.responseModels.transaction_response_model import TransactionResponseModel
+from models.responseModels.user_response_model import UserResponseModel
 
 
 class GroupHistoryResponseModel(BaseModel):
@@ -22,22 +15,6 @@ class GroupHistoryResponseModel(BaseModel):
     creator: str
     datetime: datetime
     details: PaymentDetailResponseModel | list[TransactionResponseModel] | None
-
-
-class PaymentResponseModel(BaseModel):
-    """Payment response model."""
-
-    description: str
-    amount: float
-
-
-class UserResponseModel(BaseModel):
-    """User response model."""
-
-    user_name: str
-    paypal_me: str
-    sum_amount: float
-    payments: list[PaymentResponseModel]
 
 
 class GroupResponseModel(BaseModel):

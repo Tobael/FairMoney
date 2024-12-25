@@ -6,7 +6,7 @@ from fastapi import Depends, HTTPException
 
 from models.accounting import Accounting
 from models.group import Group
-from models.responseModels.acounts_response_model import TransactionResponseModel
+from models.responseModels.transaction_response_model import TransactionResponseModel
 from models.transaction import Transaction
 from models.user import User
 from shared.db_query_service import DatabaseServiceDep

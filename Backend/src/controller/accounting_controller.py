@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Header
 
-from models.responseModels.acounts_response_model import TransactionResponseModel
+from models.responseModels.transaction_response_model import TransactionResponseModel
 from requestHandler.accounting_handler import AccountingHandlerDependency
 
 accounting_router = APIRouter(
