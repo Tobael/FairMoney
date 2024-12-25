@@ -1,13 +1,11 @@
 import "./CreateGroup.scss";
-import React, {useEffect} from "react";
+import React from "react";
 import GroupTitle from "./views/GroupTitle/GroupTitle.jsx";
 import GroupCreator from "./views/GroupCreator/GroupCreator.jsx";
 import GroupMember from "./views/GroupMember/GroupMember.jsx";
 import GroupSummary from "./views/GroupSummary/GroupSummary.jsx";
 import LandingPage from "./views/LandingPage/LandingPage.jsx";
 import {CreateGroupViews} from "../../shared/enums.js";
-import {createGroup as createGroupBackend} from "../../shared/backend.js";
-import {showErrorPage} from "../../shared/error.js";
 
 
 /**
@@ -36,27 +34,6 @@ export default function CreateGroupView() {
         setGroupId("");
         setCurrentView(CreateGroupViews.LandingPage);
     }
-
-    /**
-     * Calls the backend to create a group when all necessary information is provided.
-     */
-    useEffect(() => {
-        const createGroup = async () => {
-            const result = await createGroupBackend(group)
-            if (result.ok) {
-                const data = await result.json();
-                setGroupId(data.uuid);
-            } else {
-                showErrorPage(result.toString())
-            }
-        }
-
-        if (group.creator.name && group.title && group.members.length > 0) {
-            createGroup().then(() => {
-                setCurrentView(CreateGroupViews.GroupSummary);
-            });
-        }
-    }, [group]);
 
     return (
         <div id="create-group-wrapper">
@@ -93,13 +70,12 @@ export default function CreateGroupView() {
             )}
             {show === CreateGroupViews.GroupMember && (
                 <GroupMember
-                    creator={group.creator}
+                    group={group}
                     onBackClick={() => resetGroupCreation()}
-                    onMembersAdded={async (groupMembers) => {
-                        setGroup((prevGroup) => ({
-                            ...prevGroup,
-                            members: groupMembers,
-                        }));
+                    onGroupCreated={(group, groupId) => {
+                        setGroup(group);
+                        setGroupId(groupId);
+                        setCurrentView(CreateGroupViews.GroupSummary);
                     }}
                 />
             )}
