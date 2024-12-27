@@ -22,7 +22,6 @@ def convert_transaction_to_response_model(transaction: Transaction) -> Transacti
     Returns:
         TransactionResponseModel: The response model representing the transaction.
     """
-
     return TransactionResponseModel(
         payment_from=transaction.payment_from.name,
         payment_to=transaction.payment_to.name,

@@ -11,9 +11,9 @@ from models.requestModels.group_request_model import GroupCreateRequestModel
 from models.responseModels.group_response_model import (GroupResponseModel,
                                                         GroupHistoryResponseModel,
                                                         UserResponseModel,
-                                                        PaymentResponseModel,
                                                         PaymentDetailResponseModel,
                                                         TransactionResponseModel)
+from models.responseModels.payment_response_model import PaymentResponseModel
 from models.user import User
 from shared.db_query_service import DatabaseServiceDep
 
