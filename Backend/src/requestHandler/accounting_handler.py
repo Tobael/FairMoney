@@ -65,9 +65,12 @@ class AccountingHandler:
             # Get the first creditor and debtor
             creditor, credit_amount = creditors.pop(0)
             debtor, debt_amount = debtors.pop(0)
+            debt_amount = abs(debt_amount)
 
             # Determine the transaction amount as the minimum of the credit and debt amounts
             transaction_amount = min(credit_amount, debt_amount)
+            transaction_amount = math.ceil(transaction_amount * 100) / 100
+
             transactions.append((debtor, creditor, transaction_amount))
 
             # Adjust the remaining credit or debt and reinsert into the list if not settled
@@ -106,9 +109,6 @@ class AccountingHandler:
                 if participant not in saldo_dict:
                     saldo_dict[participant] = 0.0
                 saldo_dict[participant] -= amount_per_participant
-
-        for key, value in saldo_dict.items():
-            saldo_dict[key] = math.ceil(value * 100) / 100
 
         transactions = self._minimize_transactions(saldo_dict)
 
