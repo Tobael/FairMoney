@@ -82,7 +82,6 @@ class DatabaseSessionManager:
             raise HTTPException(status_code=500, detail="Database could not be initialized.")
 
         async with self._engine.begin() as connection:
-            #  await connection.run_sync(ORMBase.metadata.drop_all)  # todo
             await connection.run_sync(ORMBase.metadata.create_all)
 
         session = self._sessionmaker()
@@ -95,18 +94,23 @@ class DatabaseSessionManager:
             await session.close()
 
 
-sessionmanager = DatabaseSessionManager(f"sqlite+aiosqlite:///{os.getenv("DB_PATH")}", {})
+sessionmanager = None
 
 
-async def get_db_session():
+async def get_db_session() -> AsyncSession:
     """
     Dependency function to provide a singleton database session.
 
     Yields:
         AsyncSession: The asynchronous database session.
     """
+    global sessionmanager
+
+    if sessionmanager is None:
+        sessionmanager = DatabaseSessionManager(f"sqlite+aiosqlite:///{os.getenv("DB_PATH")}", {})
+
     async with sessionmanager.session() as session:
-        yield session
+        return session
 
 
 DBSessionDep = Annotated[AsyncSession, Depends(get_db_session)]

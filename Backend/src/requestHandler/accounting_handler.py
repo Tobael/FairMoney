@@ -83,15 +83,15 @@ class AccountingHandler:
 
         return transactions
 
-    async def _calculate_transactions(self, group: Group) -> list[Transaction]:
+    def _get_saldo_dict(self, group: Group) -> dict[User, float]:
         """
-        Calculates the transactions needed to settle all payments within a group.
+        Calculates the balance (saldo) for each user in a group based on their payments.
 
         Args:
             group (Group): The group object containing the payments.
 
         Returns:
-            list[Transaction]: A list of transactions needed to settle the group's payments.
+            dict[User, float]: A dictionary mapping each user to their balance amount.
         """
         saldo_dict: dict[User, float] = {}
 
@@ -110,6 +110,20 @@ class AccountingHandler:
                     saldo_dict[participant] = 0.0
                 saldo_dict[participant] -= amount_per_participant
 
+        return saldo_dict
+
+    async def _calculate_transactions(self, group: Group) -> list[Transaction]:
+        """
+        Calculates the transactions needed to settle all payments within a group.
+
+        Args:
+            group (Group): The group object containing the payments.
+
+        Returns:
+            list[Transaction]: A list of transactions needed to settle the group's payments.
+        """
+
+        saldo_dict = self._get_saldo_dict(group)
         transactions = self._minimize_transactions(saldo_dict)
 
         return [
