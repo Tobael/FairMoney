@@ -106,7 +106,7 @@ async def get_db_session() -> AsyncSession:
     """
     global sessionmanager
 
-    if sessionmanager is None:
+    if sessionmanager is None or "test" in os.getenv("DB_PATH", ""):
         sessionmanager = DatabaseSessionManager(f"sqlite+aiosqlite:///{os.getenv("DB_PATH")}", {})
 
     async with sessionmanager.session() as session:

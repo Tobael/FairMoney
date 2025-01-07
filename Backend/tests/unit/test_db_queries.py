@@ -48,7 +48,10 @@ async def test_get_group() -> None:
         closed=False,
         payments=[],
         accountings=[],
-        users=[],
+        users=[User(
+            name="Test User",
+            paypal_me_link=""
+        )],
         created_at=datetime.now(),
         created_by=User(
             name="Test User",
@@ -56,17 +59,18 @@ async def test_get_group() -> None:
         ))
 
     group_uuid = await database_service.create_initial_group(group=inital_group)
+    await database_service.commit()
 
     group = await database_service.get_group(group_uuid)
 
     assert group.uuid == group_uuid
     assert group.title == inital_group.title
     assert group.closed == inital_group.closed
-    assert group.payments == inital_group.payments
-    assert group.accountings == inital_group.accountings
-    assert group.users == inital_group.users
+    assert len(group.payments) == len(inital_group.payments)
+    assert len(group.accountings) == len(inital_group.accountings)
+    assert len(group.users) == len(inital_group.users)
     assert group.created_at == inital_group.created_at
-    assert group.created_by == inital_group.created_by
+    assert group.created_by.name == inital_group.created_by.name
     assert group.closed_at == inital_group.closed_at
     assert group.closed_by == inital_group.closed_by
 

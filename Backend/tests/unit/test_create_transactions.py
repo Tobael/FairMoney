@@ -43,8 +43,8 @@ def group(user1, user2, user3):
 
 # T101
 @pytest.mark.asyncio
-async def test_get_saldo_dict(database_service, group, user1, user2, user3) -> None:
-    accounting_handler = AccountingHandler(database_service=database_service)
+async def test_get_saldo_dict(group, user1, user2, user3) -> None:
+    accounting_handler = AccountingHandler(database_service=None)
     saldo_dict = accounting_handler._get_saldo_dict(group)
     assert saldo_dict[user1] == 41.66666666666666
     assert saldo_dict[user2] == -45.833333333333336
@@ -53,8 +53,8 @@ async def test_get_saldo_dict(database_service, group, user1, user2, user3) -> N
 
 # T102
 @pytest.mark.asyncio
-async def test_calculate_transactions(database_service, group, user1, user2, user3) -> None:
-    accounting_handler = AccountingHandler(database_service=database_service)
+async def test_calculate_transactions(group, user1, user2, user3) -> None:
+    accounting_handler = AccountingHandler(database_service=None)
 
     saldo_dict = {
         user1: 41.66666666666666,

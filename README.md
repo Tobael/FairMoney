@@ -23,6 +23,19 @@ Easily share your expenses with your friends, colleagues or any other group of y
 - **./Docs:** Documents created for IU: DLMCSPSE01_D
 
 
+## How to test the application
+
+### Frontend
+tbd
+
+### Backend
+- Ensure Python is installed by executing `python --version` in your shell.
+- Switch your working directory to ./Backend (`cd Backend`).
+- Install dependencies with `pip install -r requirements.txt`
+- Switch your working directory to ./tests (`cd tests`).
+- Execute the Unit and Integrationtests with `pytest`
+
+
 ## How to run the application
 
 ### App (with Docker)
@@ -44,6 +57,7 @@ Easily share your expenses with your friends, colleagues or any other group of y
 ### Backend
 - Ensure Python is installed by executing `python --version` in your shell.
 - Switch your working directory to ./Backend (`cd Backend`).
+- Install dependencies with `pip install -r requirements.txt`
 - Set the env variable *DB_PATH* to determine the path to the sqlite3 file.
 - Run `python main.py` in your shell.
 - See the URL in the shell to access the dev server.
