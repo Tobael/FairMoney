@@ -183,7 +183,7 @@ const fetchApi = async (url, requestOptions) => {
  * @param {string} [user_name] - The name of the user (optional).
  * @returns {Headers} - The generated headers.
  */
-const get_headers = (user_name) => {
+export const get_headers = (user_name) => {
     const headers = new Headers();
     if (user_name) {
         headers.append("x-user-name", user_name);
