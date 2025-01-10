@@ -62,7 +62,7 @@ export default function GroupMember({group, onGroupCreated, onBackClick}) {
             const data = await result.json();
             onGroupCreated(group, data.uuid);
         } else {
-            showErrorPage(result.toString())
+            showErrorPage(result.statusText)
         }
     };
 

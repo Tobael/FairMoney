@@ -24,7 +24,6 @@ export default function ErrorPage() {
     // Read the error message from the query parameters
     const [searchParams] = useSearchParams();
     const errorMessage = searchParams.get("errormsg")
-    console.log(errorMessage);
 
     return (
         <div id="error-page-container" className="landing-page-container">

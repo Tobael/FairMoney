@@ -33,7 +33,7 @@ export default function GroupAccountingOverview({onBackClick, login, group}) {
     const closeGroup = async () => {
         const result = await closeGroupBackend(group.uuid, login)
         if (!result.ok) {
-            showErrorPage(result.toString())
+            showErrorPage(result.statusText)
         }
     }
 
@@ -47,7 +47,7 @@ export default function GroupAccountingOverview({onBackClick, login, group}) {
                 const data = await result.json()
                 setAccountings(data);
             } else {
-                showErrorPage(result.toString())
+                showErrorPage(result.statusText)
             }
         }
 
