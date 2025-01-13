@@ -29,7 +29,7 @@ Easily share your expenses with your friends, colleagues or any other group of y
 - Ensure Node is installed by executing `node --version` in your shell.
 - Ensure NPM is installed by executing `npm --version ` in your shell.
 - Switch your working directory to ./Frontend (`cd Frontend`),
-- Execute `npm install` in your shell to install the necessary dependecies.
+- Execute `npm ci` in your shell to install the necessary dependecies.
 - Execute `npm test` in your shell to run the tests.
 
 ### Backend
@@ -54,7 +54,7 @@ Easily share your expenses with your friends, colleagues or any other group of y
 - Ensure Node is installed by executing `node --version` in your shell.
 - Ensure NPM is installed by executing `npm --version ` in your shell.
 - Switch your working directory to ./Frontend (`cd Frontend`),
-- Execute `npm install` in your shell to install the necessary dependecies.
+- Execute `npm ci` in your shell to install the necessary dependecies.
 - Execute `npm run dev` in your shell to run the dev server.
 - See the URL in the shell to access the dev server.
 
