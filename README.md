@@ -37,7 +37,7 @@ Easily share your expenses with your friends, colleagues or any other group of y
 - Switch your working directory to ./Backend (`cd Backend`).
 - Install dependencies with `pip install -r requirements.txt`
 - Switch your working directory to ./tests (`cd tests`).
-- Execute the Unit and Integrationtests with `pytest`
+- Execute the Unit and Integrationtests with `python -m pytest`
 
 
 ## How to run the application
