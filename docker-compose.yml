@@ -1,0 +1,24 @@
+services:
+  frontend:
+    container_name: "wedding_backend"
+    build:
+      context: ../../.
+      dockerfile: dockerfiles/website/backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
+      - ENVIRONMENT=PRODUCTION
+    networks:
+      - external_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fairmoney.rule=Host(`fairmoney.betz.coffee`)"
+      - "traefik.http.routers.fairmoney.entrypoints=websecure"
+      - "traefik.http.routers.fairmoney.tls.certresolver=externalresolver"
+      - "traefik.http.routers.fairmoney.tls=true"
+      - "traefik.docker.network=external_network"
+
+networks:
+  external_network:
+    external: true
+    name: external_network

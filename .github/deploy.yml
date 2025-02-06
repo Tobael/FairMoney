@@ -1,0 +1,37 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt install wireguard
+      - run: echo "${{ secrets.WIREGUARD_CONF }}" > wireguard.conf
+      - run: sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
+      - run: sudo wg-quick up ./wireguard.conf
+      - run: sudo wg show
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_SECRET_KEY }}
+          name: id_rsa # optional
+          known_hosts: ${{ secrets.SSH_HOST }}
+          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
+      - name: Adding Known Hosts
+        run: ssh-keyscan -T 20 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: Checkout project
+        uses: actions/checkout@v4
+      - name: Deploy with rsync
+        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/wedding/
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_SECRET_KEY }}
+          port: 22
+          script: |
+            docker compose up -d --build --remove-orphans
