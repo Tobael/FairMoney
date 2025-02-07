@@ -21,6 +21,7 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           leptosfmt
+          trunk
           (rust-bin.selectLatestNightlyWith (
             toolchain:
             toolchain.default.override {
