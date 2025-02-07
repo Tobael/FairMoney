@@ -1,9 +1,8 @@
 services:
   frontend:
-    container_name: "wedding_backend"
+    container_name: "fairmoney"
     build:
-      context: ../../.
-      dockerfile: dockerfiles/website/backend/Dockerfile
+      context: .
     restart: unless-stopped
     environment:
       - TZ=Europe/Berlin
