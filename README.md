@@ -25,7 +25,6 @@ classDiagram
     Block : String hash
     Block : Vec~Transaction~ transactions
     Block : String validator
-    Block : String signature
     Block : calculate_hash() String
     Block : String signature
     Transaction : String sender
