@@ -11,15 +11,6 @@ jobs:
       - run: echo "${{ secrets.WIREGUARD_CONF }}" > wireguard.conf
       - run: sudo ln -s /usr/bin/resolvectl /usr/local/bin/resolvconf
       - run: sudo wg-quick up ./wireguard.conf
-      - run: sudo wg show
-
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.DEPLOY_SECRET_KEY }}
-          name: id_rsa # optional
-          known_hosts: ${{ secrets.SSH_HOST }}
-          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: Adding Known Hosts
         run: ssh-keyscan -T 20 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Checkout project
