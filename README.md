@@ -1,33 +1,61 @@
-# FairMoney
+# fairmoney
 
-Easily share your expenses with your friends, colleagues or any other group of your choice.
+This template should help get you started developing with Vue 3 in Vite.
 
-# Blockchain setup
-Every group has a set of transactions saved in a blockchain. The genesis Block contains the first transactions made when creating the group. Proof of authority is required and shared with and edit link, not shared with a view link.
+## Recommended IDE Setup
 
-```mermaid
-flowchart
-    GenesisBlock["Alice --> Bob: 10€
-    Bob --> Michael: 5€
-    PreviousHash: 0"]
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+## Type Support for `.vue` Imports in TS
+
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
 ```
 
-```mermaid
-classDiagram
-    Blockchain --> Block
-    Block --> Transaction
+### Compile and Hot-Reload for Development
 
-    Blockchain : Vec~Block~ blocks
-    Blockchain : Vec~Transaction~ pending_transactions
-    Block : u64 index
-    Block : u64 timestamp
-    Block : String previous_hash
-    Block : String hash
-    Block : Vec~Transaction~ transactions
-    Block : String validator
-    Block : calculate_hash() String
-    Block : String signature
-    Transaction : String sender
-    Transaction : String receiver
-    Transaction : f64 amount
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
+```
+
+### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+
+```sh
+npm run test:e2e:dev
+```
+
+This runs the end-to-end tests against the Vite development server.
+It is much faster than the production build.
+
+But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
+
+```sh
+npm run build
+npm run test:e2e
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
 ```
