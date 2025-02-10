@@ -1,6 +1,8 @@
 # FairMoney 💸
 
-This project is a distributed bill tracking program (similar to tricount, splitwise, ...). Instead of a classic client-server architecture Fairmoney uses P2P with the help of Blockchain. 
+This project is a distributed bill tracking program (similar to tricount, splitwise, ...). Instead of a classic client-server architecture Fairmoney uses P2P with the help of Blockchain.
+
+(The distributed blockchain approach was only chosen for academic purposes and to maybe finally find something a blockchain is actually useful for.)
 
 # Features 🧑‍🔧
 - [ ] Creating a bill with multiple users and multiple transactions amongst those users.
