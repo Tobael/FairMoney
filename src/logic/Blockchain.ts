@@ -7,11 +7,12 @@ type BlockchainLike = Blockchain
 export class Blockchain {
   blocks: Block[] = []
 
-  async export(name: string, privateKey: CryptoKey) {
+  async export(name: string, publicKey: CryptoKey, privateKey: CryptoKey) {
     const blockchainStore = useBlockchainStore()
+    const publicKeyJwk = await window.crypto.subtle.exportKey('jwk', publicKey)
     const privateKeyJwk = await window.crypto.subtle.exportKey('jwk', privateKey)
     const privateKeyHash = await hashPrivateKey(privateKey)
-    blockchainStore.upsertBlockchain(name, privateKeyJwk, privateKeyHash, this)
+    blockchainStore.upsertBlockchain(name, privateKeyJwk, privateKeyHash, publicKeyJwk, this)
   }
 
   static from(data: BlockchainLike): Blockchain {

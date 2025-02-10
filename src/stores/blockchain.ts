@@ -5,6 +5,7 @@ export type BlockchainMap = {
   name: string
   privateKey: object
   privateKeyHash: string
+  publicKey: object
   blockchain: Blockchain
 }
 
@@ -20,6 +21,7 @@ export const useBlockchainStore = defineStore('blockchain', {
       name: string,
       privateKey: object,
       privateKeyHash: string,
+      publicKey: object,
       blockchain: Blockchain,
     ) {
       let isNewBlockchain = true
@@ -31,7 +33,7 @@ export const useBlockchainStore = defineStore('blockchain', {
         }
       }
       if (isNewBlockchain) {
-        this.blockchains.push({ name, privateKey, privateKeyHash, blockchain })
+        this.blockchains.push({ name, privateKey, privateKeyHash, publicKey, blockchain })
       }
 
       this.persistToLocalStorage()
@@ -46,11 +48,12 @@ export const useBlockchainStore = defineStore('blockchain', {
       if (string) {
         const storeObjects = JSON.parse(string)
         this.blockchains = storeObjects.map(
-          ({ name, privateKey, privateKeyHash, blockchain }: BlockchainMap) => {
+          ({ name, privateKey, privateKeyHash, publicKey, blockchain }: BlockchainMap) => {
             return {
               name,
               privateKey,
               privateKeyHash,
+              publicKey,
               blockchain: Blockchain.from(blockchain),
             }
           },
