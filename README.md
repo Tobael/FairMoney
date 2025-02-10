@@ -10,6 +10,7 @@ This project is a distributed bill tracking program (similar to tricount, splitw
 
 # Features 🧑‍🔧
 - [ ] Creating a bill with multiple users and multiple transactions amongst those users.
+- [ ] Have the portability to use multiple different browser entities
 - [ ] Editing transactions and adding users after initially creating a bill.
   - Challenges are: Due to the nature of a blockchain editing a transaction after it is already part of a block is difficult. Possibly there is a need of reversing the transaction by artificially creating an inverse transaction.
 - [ ] Sharing the bill with other participants of the bill

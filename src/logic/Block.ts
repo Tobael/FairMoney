@@ -4,7 +4,7 @@ type BlockLike = Block
 
 export class Block {
   index: number
-  timestamp: number = Date.now()
+  timestamp: number
   previousHash: string
   hash: string
   transactions: Transaction[]
@@ -18,6 +18,7 @@ export class Block {
     validators: string[],
   ) {
     this.index = index
+    this.timestamp = Date.now()
     this.previousHash = previousHash
     this.transactions = transactions
     this.validators = validators

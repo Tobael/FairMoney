@@ -8,7 +8,10 @@ import router from './router'
 
 import PrimeVue from 'primevue/config'
 import Aura from "@primevue/themes/aura"
-import { Button } from 'primevue'
+
+import { Button, InputText} from 'primevue'
+import IftaLabel from 'primevue/iftalabel';
+
 
 const app = createApp(App)
 
@@ -20,5 +23,7 @@ app.use(PrimeVue, {
   }
 })
 app.component('Button', Button)
+app.component('InputText', InputText)
+app.component('IftaLabel', IftaLabel)
 
 app.mount('#app')

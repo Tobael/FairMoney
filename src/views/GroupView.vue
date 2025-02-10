@@ -1,6 +1,11 @@
 <template>
   <form>
-    <input type="text" v-model="groupName" />
+    <div class="card flex justify-center">
+      <IftaLabel>
+        <InputText id="username" v-model="groupName" />
+        <label for="username">Gruppenname</label>
+      </IftaLabel>
+    </div>
   </form>
 </template>
 
@@ -30,8 +35,20 @@ export default {
         this.groupName = possibleBlockchain.name
         this.blockchain = possibleBlockchain.blockchain
         this.privateKeyHash = possibleBlockchain.privateKeyHash
-        this.privateKey = await window.crypto.subtle.importKey('jwk', possibleBlockchain.privateKey, { name: 'RSASSA-PKCS1-v1_5' }, true, ["sign", "verify"])
-        this.publicKey = await window.crypto.subtle.importKey('jwk', possibleBlockchain.publicKey, { name: 'RSASSA-PKCS1-v1_5' }, true, ["sign", "verify"])
+        this.privateKey = await window.crypto.subtle.importKey(
+          'jwk',
+          possibleBlockchain.privateKey,
+          { name: 'RSASSA-PKCS1-v1_5' },
+          true,
+          ['sign', 'verify'],
+        )
+        this.publicKey = await window.crypto.subtle.importKey(
+          'jwk',
+          possibleBlockchain.publicKey,
+          { name: 'RSASSA-PKCS1-v1_5' },
+          true,
+          ['sign', 'verify'],
+        )
       }
     } else {
       const keyPair = await generateKeypair()
