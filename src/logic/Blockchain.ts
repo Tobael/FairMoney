@@ -40,6 +40,10 @@ export class Blockchain {
     block.signature = await signBlock(keyPair.privateKey, block)
     this.blocks.push(block)
   }
+
+  getAllTransactions(): Transaction[] {
+    return this.blocks.flatMap((block) => block.transactions)
+  }
 }
 
 export async function hashPrivateKey(privateKey: CryptoKey) {

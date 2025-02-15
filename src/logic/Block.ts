@@ -30,7 +30,7 @@ export class Block {
       blockData.previousHash,
       blockData.transactions.map(
         (transactionData) =>
-          new Transaction(transactionData.sender, transactionData.receiver, transactionData.amount),
+          new Transaction(transactionData.id, transactionData.purpose, transactionData.sender, transactionData.receiver, transactionData.amount),
       ),
       blockData.validators,
     )

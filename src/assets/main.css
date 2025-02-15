@@ -1,1 +1,9 @@
 @import './base.css';
+@import 'primeicons/primeicons.css';
+
+
+#app {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+}
